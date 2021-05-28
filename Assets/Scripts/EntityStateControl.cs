@@ -28,14 +28,15 @@ public abstract class EntityStateControl : MonoBehaviour
 
     protected Rigidbody rb;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         currentMState = EntityMovementState.STATIONARY;
+        currentCState = EntityCombatState.IDLE;
         rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
-    void Update()
+    protected void Update()
     {
         switch(currentMState)
         {
@@ -46,39 +47,72 @@ public abstract class EntityStateControl : MonoBehaviour
                 handleMovement();
                 break;
         }
-
+        
         switch(currentCState)
         {
             case EntityCombatState.COMBAT:
+                handleCombat();
                 break;
             case EntityCombatState.IDLE:
+                handleIdle();
                 break;
             case EntityCombatState.DEATH:
+                handleDeath();
                 break;
         }
     }
 
-    protected virtual void handleStationary()
+    protected virtual void enterCState(EntityCombatState cState)
     {
-        if (speed != Vector3.zero)
+        currentCState = cState;
+        switch (currentCState)
         {
-            currentMState = EntityMovementState.MOVING;
+            case EntityCombatState.COMBAT:
+                enterCombat();
+                break;
+            case EntityCombatState.IDLE:
+                enterIdle();
+                break;
+            case EntityCombatState.DEATH:
+                enterDeath();
+                break;
         }
     }
-    protected virtual void handleMovement()
+
+    protected virtual void enterMState(EntityMovementState mState)
     {
-        rb.velocity = speed;
-        if (speed == Vector3.zero)
+        currentMState = mState;
+        switch (currentMState)
         {
-            currentMState = EntityMovementState.STATIONARY;
+            case EntityMovementState.STATIONARY:
+                enterStationary();
+                break;
+            case EntityMovementState.MOVING:
+                enterMovement();
+                break;
         }
     }
 
-    protected abstract void handleIdle();
+    protected virtual void handleStationary() { }
 
-    protected abstract void handleCombat();
+    protected virtual void handleMovement() { }
 
-    protected abstract void handleDeath();
+    protected virtual void handleIdle() { }
 
-    
+    protected virtual void handleCombat() { }
+
+    protected virtual void handleDeath() { }
+
+    protected virtual void enterStationary() { }
+
+    protected virtual void enterMovement() { }
+
+    protected virtual void enterIdle() { }
+
+    protected virtual void enterCombat() { }
+
+    protected virtual void enterDeath() { }
+
+
+
 }
