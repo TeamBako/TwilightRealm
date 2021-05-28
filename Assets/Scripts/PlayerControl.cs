@@ -108,7 +108,7 @@ public class PlayerControl : EntityStateControl
 
     #endregion
 
-    private IEnumerator castSpell(SpellHandler handler, float castTime = 1f) //need to redefine castTime
+    private IEnumerator castSpell(SpellHandler handler, float castTime = 0.01f) //need to redefine castTime
     {
         float timer = 0;
         while (Input.GetMouseButton(0))
