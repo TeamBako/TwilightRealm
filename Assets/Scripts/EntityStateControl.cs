@@ -12,7 +12,7 @@ public abstract class EntityStateControl : MonoBehaviour
 
     protected enum EntityCombatState
     {
-        IDLE,
+        NOTATTACKING,
         COMBAT,
         DEATH
     }
@@ -20,45 +20,49 @@ public abstract class EntityStateControl : MonoBehaviour
     [SerializeField]
     protected float speedMultiplier;
 
-    protected Vector3 speed;
-
     protected EntityMovementState currentMState;
 
     protected EntityCombatState currentCState;
+
+    protected Animator anim;
 
     protected Rigidbody rb;
 
     protected virtual void Awake()
     {
         currentMState = EntityMovementState.STATIONARY;
-        currentCState = EntityCombatState.IDLE;
+        currentCState = EntityCombatState.NOTATTACKING;
         rb = GetComponent<Rigidbody>();
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     protected void Update()
     {
-        switch(currentMState)
+        if (currentCState != EntityCombatState.DEATH)
         {
-            case EntityMovementState.STATIONARY:
-                handleStationary();
-                break;
-            case EntityMovementState.MOVING:
-                handleMovement();
-                break;
-        }
-        
-        switch(currentCState)
-        {
-            case EntityCombatState.COMBAT:
-                handleCombat();
-                break;
-            case EntityCombatState.IDLE:
-                handleIdle();
-                break;
-            case EntityCombatState.DEATH:
-                handleDeath();
-                break;
+            switch (currentMState)
+            {
+                case EntityMovementState.STATIONARY:
+                    handleStationary();
+                    break;
+                case EntityMovementState.MOVING:
+                    handleMovement();
+                    break;
+            }
+
+            switch (currentCState)
+            {
+                case EntityCombatState.COMBAT:
+                    handleCombat();
+                    break;
+                case EntityCombatState.NOTATTACKING:
+                    handleNotAttacking();
+                    break;
+                case EntityCombatState.DEATH:
+                    handleDeath();
+                    break;
+            }
         }
     }
 
@@ -70,8 +74,8 @@ public abstract class EntityStateControl : MonoBehaviour
             case EntityCombatState.COMBAT:
                 enterCombat();
                 break;
-            case EntityCombatState.IDLE:
-                enterIdle();
+            case EntityCombatState.NOTATTACKING:
+                enterNotAttacking();
                 break;
             case EntityCombatState.DEATH:
                 enterDeath();
@@ -97,7 +101,7 @@ public abstract class EntityStateControl : MonoBehaviour
 
     protected virtual void handleMovement() { }
 
-    protected virtual void handleIdle() { }
+    protected virtual void handleNotAttacking() { }
 
     protected virtual void handleCombat() { }
 
@@ -107,12 +111,27 @@ public abstract class EntityStateControl : MonoBehaviour
 
     protected virtual void enterMovement() { }
 
-    protected virtual void enterIdle() { }
+    protected virtual void enterNotAttacking() { }
 
     protected virtual void enterCombat() { }
 
     protected virtual void enterDeath() { }
 
+    public virtual void takeDamage(int damageVal) {
+        Debug.Log(gameObject);
+        setCurrentHP(getCurrentHP() - damageVal);
+        if(getCurrentHP() <= 0)
+        {
+            enterCState(EntityCombatState.DEATH);
+            anim.SetBool("Death", true);
+        }
+    }
 
+    public abstract int getCurrentHP();
+
+    public abstract void setCurrentHP(int val);
+    public abstract int getMaxHP();//Can be used by UIManager
+
+    public abstract void setMaxHP(int value);//Can be used by GameManagerProgression for AI
 
 }

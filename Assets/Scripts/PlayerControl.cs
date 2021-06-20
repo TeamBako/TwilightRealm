@@ -4,19 +4,29 @@ using UnityEngine;
 
 public class PlayerControl : EntityStateControl
 {
-    private PlayerData data;
+    public static PlayerControl Instance;
 
-    private Animator anim;
-
-    #region Temp
     [SerializeField]
-    private int spellNumber;
+    private PlayerData pData;
+
+    #region Balance
+    [SerializeField]
+    private int baseHP, hpPerLevel, baseMP, mpPerLevel, baseHPRegen, baseMPRegen, hPRegenPerLevel, mPRegenPerLevel;
+    [SerializeField]
+    private float baseSpeed, speedPerLevel;
+    #endregion
+
+    #region UnsavableCombat
+    private int currentMP, currentHP;
+    private float regenTimer = 0f;
     #endregion
 
     #region CombatRelated
 
     [SerializeField]
-    private List<SpellHandler> spells = new List<SpellHandler>();
+    private SpellHandler fireBall, frostBreath, rockDOT;
+
+    private SpellHandler selectedSpell;
 
     [SerializeField]
     private Transform castPoint;
@@ -28,14 +38,73 @@ public class PlayerControl : EntityStateControl
     protected override void Awake()
     {
         base.Awake();
-        anim = GetComponent<Animator>();
+        Instance = this;
+    }
+
+    public void activate(PlayerData data)
+    {
+        pData = data;
+        currentHP = getMaxHP();
+        currentMP = getMaxMP();
+        speedMultiplier = getMovementSpeed();
+        
+    }
+
+    protected int getHPRegen()
+    {
+        return baseHPRegen + hPRegenPerLevel * pData.hPRegen;
+    }
+
+    protected int getMPRegen()
+    {
+        return baseMPRegen + mPRegenPerLevel * pData.mPRegen;
+    }
+
+    protected float getMovementSpeed()
+    {
+        return baseSpeed + speedPerLevel * pData.movementSpeed;
+    }
+
+    public int getMaxMP()
+    {
+        return baseMP + pData.maxMP * mpPerLevel;
+    }
+
+    public int getCurrentMP()
+    {
+        return currentMP;
+    }
+
+    public override int getMaxHP()
+    {
+        return baseHP + pData.maxHP * hpPerLevel;
+    }
+
+    public override void setMaxHP(int value)
+    {
+        pData.maxHP = value;
+    }
+
+    public override int getCurrentHP()
+    {
+        return currentHP;
+    }
+
+    public override void setCurrentHP(int val)
+    {
+        currentHP = val;
+    }
+    public PlayerData deactivate()
+    {
+        //make change to pData here before returning
+        return pData;
     }
 
     #region StateHandling
     protected override void handleStationary()
     {
         base.handleStationary();
-        transform.LookAt(getMousePositionInWorldSpace());
+        transform.LookAt(getMousePositionInWorldSpace(transform.position.y));
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S)
             || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
         {
@@ -78,8 +147,8 @@ public class PlayerControl : EntityStateControl
         {
             horizontalDir += 1;
         }
-        speed = new Vector3(horizontalDir, 0, verticalDir) * speedMultiplier;
-        transform.LookAt(getMousePositionInWorldSpace());
+        Vector3 speed = new Vector3(horizontalDir, 0, verticalDir) * speedMultiplier;
+        transform.LookAt(getMousePositionInWorldSpace(transform.position.y));
         if(speed == Vector3.zero)
         {
             enterMState(EntityMovementState.STATIONARY);
@@ -90,19 +159,56 @@ public class PlayerControl : EntityStateControl
         base.handleMovement();
     }
 
-    protected override void handleIdle()
+    protected override void handleNotAttacking()
     {
         currentCState = EntityCombatState.COMBAT;
     }
 
     protected override void handleCombat()
     {
-        if (casting == false && Input.GetMouseButtonDown(0))
+        if(regenTimer >= 1)
         {
-            casting = true;//May want to properly classify combat in the future
-            SpellHandler spell = Instantiate(spells[spellNumber], castPoint.transform).GetComponent<SpellHandler>();
-            //Set values accordingly
-            StartCoroutine(castSpell(spell));
+            currentHP = baseHPRegen + currentHP > getMaxHP() ? getMaxHP() : baseHPRegen + currentHP;
+            currentMP = baseMPRegen + currentMP > getMaxMP() ? getMaxMP() : baseMPRegen + currentMP;
+            regenTimer = 0;
+        }
+        else
+        {
+            regenTimer += Time.deltaTime;
+        }
+
+        if (casting == false)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                selectedSpell = fireBall;
+            }
+            else if (Input.GetKeyDown(KeyCode.R))
+            {
+                selectedSpell = frostBreath;
+            }
+            else if (Input.GetKeyDown(KeyCode.T))
+            {
+                selectedSpell = rockDOT;
+            }
+            else if (Input.GetMouseButtonDown(0) && selectedSpell != null)
+            {
+                SpellHandler spell = null;
+                
+                spell = Instantiate(selectedSpell, castPoint.transform.position,
+                    selectedSpell.transform.rotation).GetComponent<SpellHandler>();
+                System.Action<int> consumeMana = x => currentMP -= x;
+                spell.setup(castPoint, pData, consumeMana);
+                if (spell.canCastSpell(currentMP))
+                {
+                    //Set values accordingly
+                    casting = true;
+                    StartCoroutine(castSpell(spell));
+                } else
+                {
+                    Destroy(spell.gameObject);
+                }
+            }
         }
     }
 
@@ -111,35 +217,45 @@ public class PlayerControl : EntityStateControl
     private IEnumerator castSpell(SpellHandler handler, float castTime = 0.01f) //need to redefine castTime
     {
         float timer = 0;
+        handler.startCasting(getMousePositionInWorldSpace(castPoint.transform.position.y));
+
         while (Input.GetMouseButton(0))
         {
-            handler.whileCasting(getMousePositionInWorldSpace());
-            yield return new WaitForEndOfFrame();
-            timer += Time.deltaTime;
+            if (handler.canCastSpell(currentMP))
+            {
+                handler.whileCasting(getMousePositionInWorldSpace(castPoint.transform.position.y));
+                yield return new WaitForSeconds(0.1f);
+                timer += Time.deltaTime;
+
+            } else
+            {
+                break;
+            }
+            
         }
-        handler.transform.parent = null;
+
         if (timer >= castTime)
         {
-            handler.onFullCast(getMousePositionInWorldSpace());
+            handler.onFullCast(getMousePositionInWorldSpace(castPoint.transform.position.y));
         } else
         {
-            handler.onDisruptedCast(getMousePositionInWorldSpace());
+            handler.onDisruptedCast(getMousePositionInWorldSpace(castPoint.transform.position.y));
         }
         casting = false;
     }
 
-    private Vector3 getMousePositionInWorldSpace()
+    private Vector3 getMousePositionInWorldSpace(float yPos)
     {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out hit, 100))
         {
-            hit.point = new Vector3(hit.point.x, transform.position.y, hit.point.z);
+            hit.point = new Vector3(hit.point.x, yPos, hit.point.z);
             return hit.point;
         } else
         {
-            return Vector3.zero;
+            return new Vector3(0, yPos, 0);
         }
     }
 }
