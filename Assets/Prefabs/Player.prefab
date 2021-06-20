@@ -124,10 +124,44 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedMultiplier: 2
-  spellNumber: 0
-  spells:
-  - {fileID: 8752677252746089772, guid: 653d05f875b1b654783838d54271cd69, type: 3}
-  - {fileID: 798607520391666940, guid: ee4ada42571c6e2428ff6e31a28456d8, type: 3}
+  pData:
+    maxHP: 0
+    maxMP: 0
+    mPRegen: 0
+    hPRegen: 0
+    movementSpeed: 0
+    fireBallData:
+      damage: 0
+      manaConsumption: 0
+      areaOfEffect: 0
+      castSpeed: 0
+      burnDamage: 0
+      burnDuration: 0
+    frostBreathData:
+      damagePerSecond: 0
+      manaConsumptionRate: 0
+      areaOfCone: 0
+      slowEffect: 0
+      slowDuration: 0
+    rockDOTData:
+      damagePerSecond: 0
+      manaConsumption: 0
+      areaOfEffect: 0
+      castSpeed: 0
+      duration: 0
+  baseHP: 100
+  hpPerLevel: 5
+  baseMP: 100
+  mpPerLevel: 5
+  baseHPRegen: 1
+  baseMPRegen: 1
+  hPRegenPerLevel: 1
+  mPRegenPerLevel: 1
+  baseSpeed: 2
+  speedPerLevel: 0.2
+  fireBall: {fileID: 8752677252746089772, guid: 653d05f875b1b654783838d54271cd69, type: 3}
+  frostBreath: {fileID: 798607520391666940, guid: ee4ada42571c6e2428ff6e31a28456d8, type: 3}
+  rockDOT: {fileID: 4010605232760796045, guid: 73eccb4539a3e1741a1b3e1045d19a1c, type: 3}
   castPoint: {fileID: 514473538674793137}
 --- !u!1001 &5543488292326176405
 PrefabInstance:
@@ -146,15 +180,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4162560473967594, guid: c96ba90c5361e27459e32a2ee29da85d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 36.67
       objectReference: {fileID: 0}
     - target: {fileID: 4162560473967594, guid: c96ba90c5361e27459e32a2ee29da85d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 2.05
       objectReference: {fileID: 0}
     - target: {fileID: 4162560473967594, guid: c96ba90c5361e27459e32a2ee29da85d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 34.22
       objectReference: {fileID: 0}
     - target: {fileID: 4162560473967594, guid: c96ba90c5361e27459e32a2ee29da85d, type: 3}
       propertyPath: m_LocalRotation.w
