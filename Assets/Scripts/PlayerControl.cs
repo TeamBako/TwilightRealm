@@ -17,6 +17,7 @@ public class PlayerControl : EntityStateControl
     #endregion
 
     #region UnsavableCombat
+    [SerializeField]
     private int currentMP, currentHP;
     private float regenTimer = 0f;
     #endregion
