@@ -8,18 +8,27 @@ public abstract class SpellHandler : MonoBehaviour
 
     protected System.Action<int> consumeMana;
 
-    //[SerializeField]
-    //private bool useOwnRotation;
+    protected PlayerData refData;
 
-    ////public bool ownRotation()
-    ////{
-    ////    return useOwnRotation;
-    ////}
+    protected bool isCasting = false;
 
-    public virtual void startCasting(Vector3 referencePoint) { }
+    protected float castTimer = 0f;
+    protected virtual void Update()
+    {
+        if (isCasting)
+        {
+            castTimer += Time.deltaTime;
+        }
+    }
+    public virtual void startCasting(Vector3 referencePoint) {
+        isCasting = true;
+    }
     public virtual void whileCasting(Vector3 referencePoint) { }
     public virtual void onFullCast(Vector3 referencePoint) { }
 
+    public abstract bool finishedCasting();
+
+    public abstract float percentageCompletion();
     public virtual void onDisruptedCast(Vector3 referencePoint) 
     {
         Destroy(gameObject, 0.01f);
@@ -29,6 +38,7 @@ public abstract class SpellHandler : MonoBehaviour
     {
         consumeMana = cMana;
         caster = _caster;
+        refData = data;
     }
 
     public abstract bool canCastSpell(int currMana);
