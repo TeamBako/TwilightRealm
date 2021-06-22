@@ -118,12 +118,12 @@ public abstract class EntityStateControl : MonoBehaviour
     protected virtual void enterDeath() { }
 
     public virtual void takeDamage(int damageVal) {
-        Debug.Log(gameObject);
-        setCurrentHP(getCurrentHP() - damageVal);
-        if(getCurrentHP() <= 0)
+        int newVal = getCurrentHP() - damageVal;
+        newVal = newVal < 0 ? 0 : newVal;
+        setCurrentHP(newVal);
+        if(getCurrentHP() == 0)
         {
             enterCState(EntityCombatState.DEATH);
-            anim.SetBool("Death", true);
         }
     }
 

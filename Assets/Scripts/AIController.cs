@@ -97,6 +97,7 @@ public class AIController : EntityStateControl
     {
         base.enterStationary();
         anim.SetBool("Move", false);
+        rb.velocity = Vector3.zero;
     }
 
     protected override void handleCombat()
@@ -111,6 +112,13 @@ public class AIController : EntityStateControl
             attacking = true;
             anim.SetBool("Attack", true);
         }
+    }
+
+    protected override void enterDeath()
+    {
+        base.enterDeath();
+        enterMState(EntityMovementState.STATIONARY);
+        anim.SetBool("Death", true);
     }
 
     public virtual void attackEvent()

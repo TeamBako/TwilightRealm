@@ -12,17 +12,14 @@ public class FrostBreath : SpellHandler
     private float slowDuration;
     #endregion
 
-    public override void setup(Transform _caster, PlayerData data, System.Action<int> consumeMana)
+    public override float percentageCompletion()
     {
-        base.setup(_caster, data, consumeMana);
-        transform.parent = _caster;
-        damagePerSecond = data.frostBreathData.damagePerSecond;
-        manaConsumptionRate = data.frostBreathData.manaConsumptionRate;
-        areaOfCone = data.frostBreathData.areaOfCone;
-        slowEffect = data.frostBreathData.slowEffect;
-        slowDuration = data.frostBreathData.slowDuration;
+        return 1;
     }
-
+    public override bool finishedCasting()
+    {
+        return true;
+    }
     public override bool canCastSpell(int currMana)
     {
         return currMana >= manaConsumptionRate;
@@ -38,6 +35,7 @@ public class FrostBreath : SpellHandler
         transform.LookAt(pos);
         consumeMana(manaConsumptionRate);
     }
+
 
     public override void onFullCast(Vector3 referencePoint)
     {
