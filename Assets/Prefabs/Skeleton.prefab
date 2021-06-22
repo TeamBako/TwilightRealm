@@ -2523,4 +2523,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fill: {fileID: 6710810013096926733}
   mask: {fileID: 8802583122223219300}
-  maxSize: 3

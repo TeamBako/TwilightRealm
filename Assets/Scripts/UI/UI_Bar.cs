@@ -7,9 +7,10 @@ public class UI_Bar : MonoBehaviour
 {
     public RectTransform fill;
     public RectTransform mask;
-    public float maxSize;
+   
 
     private float curSize;
+    private float maxSize;
 
     private RectTransform ui_RectTransform;
     private Vector2 maxBarSize;
@@ -25,6 +26,7 @@ public class UI_Bar : MonoBehaviour
 
     public void UI_Initialize()
     {
+        maxSize = fill.rect.width;
         curSize = maxSize;
         mask.sizeDelta = curBarSize;
     }

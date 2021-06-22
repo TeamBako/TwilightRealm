@@ -103,7 +103,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fill: {fileID: 1912558383}
   mask: {fileID: 317637105}
-  maxSize: 3
 --- !u!1 &1482581283
 GameObject:
   m_ObjectHideFlags: 0
@@ -415,7 +414,7 @@ MonoBehaviour:
   range: 2
   damage: 10
   currentHP: 100
-  maxHP: 0
+  maxHP: 100
 --- !u!1001 &7312463776672585628
 PrefabInstance:
   m_ObjectHideFlags: 0
