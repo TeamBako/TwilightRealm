@@ -19020,9 +19020,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04816b115fbc1164fb9e6e40bb84e12a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseDOT: 2
+  baseDOT: 10
   baseManaConsumption: 25
-  baseAOE: 3
+  baseAOE: 1
   baseDuration: 5
   baseCastTime: 2
   dotPerLevel: 2

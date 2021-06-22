@@ -76,7 +76,6 @@ public class FireBall : SpellHandler
     {
         base.startCasting(referencePoint);
         transform.parent = caster;
-        consumeMana(manaConsumption);
     }
 
     public override void onFullCast(Vector3 target)
@@ -84,6 +83,7 @@ public class FireBall : SpellHandler
         transform.parent = null;
         isCasting = false;
         StartCoroutine(moveTowardsTarget(target));
+        consumeMana(manaConsumption);
     }
 
     protected IEnumerator moveTowardsTarget(Vector3 target)

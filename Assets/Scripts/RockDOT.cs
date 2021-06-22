@@ -75,7 +75,6 @@ public class RockDOT : SpellHandler
     {
         base.startCasting(referencePoint);
         transform.parent = caster;
-        consumeMana(manaConsumption);
     }
 
     public override bool canCastSpell(int currMana)
@@ -96,5 +95,6 @@ public class RockDOT : SpellHandler
             PlayerControl.Instance.transform.position + Vector3.up * 0.1f, rockAOE.transform.rotation);
         aoe.setup(damagePerSecond, areaOfEffect, duration);
         Destroy(gameObject, 0.01f);
+        consumeMana(manaConsumption);
     }
 }
