@@ -1378,11 +1378,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 512294513}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 384cdd5472878d34fb452c1f8672b1c4, type: 3}
+  m_Script: {fileID: 11500000, guid: 346ed487d78be6342b79e2aa18d16a70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fill: {fileID: 0}
-  mask: {fileID: 0}
+  fill: {fileID: 1745365467}
+  speed: 0.1
 --- !u!1001 &561421205
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3364,11 +3364,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1175309500}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 384cdd5472878d34fb452c1f8672b1c4, type: 3}
+  m_Script: {fileID: 11500000, guid: 346ed487d78be6342b79e2aa18d16a70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fill: {fileID: 0}
-  mask: {fileID: 0}
+  fill: {fileID: 132247243}
+  speed: 0.1
 --- !u!1 &1179920056
 GameObject:
   m_ObjectHideFlags: 0
@@ -5265,6 +5265,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1624756594}
+  - component: {fileID: 1624756595}
   m_Layer: 0
   m_Name: UI Manager
   m_TagString: Untagged
@@ -5288,6 +5289,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1624756595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1624756593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e47f506b3d3c292478216c1e70683fbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inGamePanel: {fileID: 1967485669}
 --- !u!1 &1642872905
 GameObject:
   m_ObjectHideFlags: 0
@@ -6227,11 +6241,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1856316168}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 384cdd5472878d34fb452c1f8672b1c4, type: 3}
+  m_Script: {fileID: 11500000, guid: 346ed487d78be6342b79e2aa18d16a70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fill: {fileID: 0}
-  mask: {fileID: 0}
+  fill: {fileID: 661848354}
+  speed: 0.1
 --- !u!1001 &1889206255
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6875,6 +6889,9 @@ MonoBehaviour:
   casting_Bar: {fileID: 483009324}
   fill_Img: {fileID: 21300000, guid: bcb5b4fb84e360f4ab517305cc7ea5ab, type: 3}
   load_Img: {fileID: 21300000, guid: 9df81246e4df1154cb8d7410d2af7e84, type: 3}
+  fire_Skill: {fileID: 1856316170}
+  ice_Skill: {fileID: 1175309502}
+  earth_Skill: {fileID: 512294515}
 --- !u!1001 &1968067783
 PrefabInstance:
   m_ObjectHideFlags: 0

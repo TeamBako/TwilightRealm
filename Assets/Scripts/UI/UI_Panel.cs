@@ -19,10 +19,4 @@ public abstract class UI_Panel : MonoBehaviour
     {
         UI_Start();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        UI_Update();
-    }
 }
