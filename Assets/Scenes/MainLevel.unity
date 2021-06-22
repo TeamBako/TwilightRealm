@@ -1782,10 +1782,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 514473538174908135, guid: d1c0941c06f796c449f935733feccf03, type: 3}
-      propertyPath: speedMultiplier
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 5539608860467879295, guid: d1c0941c06f796c449f935733feccf03, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1843,6 +1839,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1362998472, guid: 7f9ead5fd9946764380fc18d4385daa6, type: 3}
+      propertyPath: maxHP
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 1482581288, guid: 7f9ead5fd9946764380fc18d4385daa6, type: 3}
       propertyPath: m_Camera
       value: 

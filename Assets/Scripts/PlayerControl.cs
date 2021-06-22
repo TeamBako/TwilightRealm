@@ -29,6 +29,8 @@ public class PlayerControl : EntityStateControl
 
     private SpellHandler selectedSpell;
 
+    private SpellHandler castedSpell;
+
     [SerializeField]
     private Transform castPoint;
 
@@ -111,6 +113,13 @@ public class PlayerControl : EntityStateControl
         {
             enterMState(EntityMovementState.MOVING);
         }//temp
+    }
+
+    protected override void enterDeath()
+    {
+        base.enterDeath();
+        enterMState(EntityMovementState.STATIONARY);
+        anim.SetBool("Death", true);
     }
 
     protected override void enterMovement()
@@ -215,18 +224,17 @@ public class PlayerControl : EntityStateControl
 
     #endregion
 
-    private IEnumerator castSpell(SpellHandler handler, float castTime = 0.01f) //need to redefine castTime
+    private IEnumerator castSpell(SpellHandler handler) //need to redefine castTime
     {
-        float timer = 0;
         handler.startCasting(getMousePositionInWorldSpace(castPoint.transform.position.y));
-
+        castedSpell = handler;
         while (Input.GetMouseButton(0))
         {
             if (handler.canCastSpell(currentMP))
             {
                 handler.whileCasting(getMousePositionInWorldSpace(castPoint.transform.position.y));
+                Debug.Log(handler.percentageCompletion());
                 yield return new WaitForSeconds(0.1f);
-                timer += Time.deltaTime;
 
             } else
             {
@@ -235,7 +243,7 @@ public class PlayerControl : EntityStateControl
             
         }
 
-        if (timer >= castTime)
+        if (handler.finishedCasting())
         {
             handler.onFullCast(getMousePositionInWorldSpace(castPoint.transform.position.y));
         } else
@@ -243,8 +251,16 @@ public class PlayerControl : EntityStateControl
             handler.onDisruptedCast(getMousePositionInWorldSpace(castPoint.transform.position.y));
         }
         casting = false;
+        castedSpell = null;
     }
 
+    public SpellHandler spellCasted
+    {
+        get
+        {
+            return castedSpell;
+        }
+    }
     private Vector3 getMousePositionInWorldSpace(float yPos)
     {
         RaycastHit hit;

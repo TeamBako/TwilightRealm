@@ -427,6 +427,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spider Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 1711228206799690, guid: dcda32f024ad4be4fac00e3568966e56, type: 3}
+      propertyPath: m_TagString
+      value: Monster
+      objectReference: {fileID: 0}
     - target: {fileID: 4006009083337480, guid: dcda32f024ad4be4fac00e3568966e56, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 34.031696
