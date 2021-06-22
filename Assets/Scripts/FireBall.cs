@@ -4,65 +4,115 @@ using UnityEngine;
 
 public class FireBall : SpellHandler
 {
-    #region DeterminedData
-    private int damage;
-    private int manaConsumption;
-    private float areaOfEffect;
-    private float castSpeed;
-    private int burnDamage;
-    private float burnDuration;
+    #region Balance
+    [SerializeField]
+    private int baseDamage, baseManaConsumption, baseBurnDamage;
+    [SerializeField]
+    private float baseAOE, baseBurnDuration, baseCastTime;
+
+    [SerializeField]
+    private int damagePerLevel, manaConsumptionPerLevel, burnDamagePerLevel;
+    [SerializeField]
+    private float aoePerLevel, burnDurationPerLevel, castTimeMultiplierPerLevel;
     #endregion
+
+    public override float percentageCompletion()
+    {
+        float val = castTimer / castTime;
+        return val > 1 ? 1 : val;
+    }
+
+    protected float castTime
+    {
+        get
+        {
+            return baseCastTime * Mathf.Pow(castTimeMultiplierPerLevel, refData.fireBallData.castSpeed); 
+        }
+    }
+
+    protected int manaConsumption
+    {
+        get
+        {
+            int curr = baseManaConsumption - manaConsumptionPerLevel * refData.fireBallData.manaConsumption;
+            return curr >= 0 ? curr : 0;
+        }
+    }
+
+    protected int damage
+    {
+        get
+        {
+            return baseDamage + damagePerLevel * refData.fireBallData.damage;
+        }
+    }
+
+    protected float areaOfEffect
+    {
+        get
+        {
+            return baseAOE + aoePerLevel * refData.fireBallData.areaOfEffect;
+        }
+    }
 
     [SerializeField]
     private float speedMultiplier;
 
     [SerializeField]
-    private GameObject explosion; //replace with proper explosion calculations
+    private Explosion explosion; //replace with proper explosion calculations
 
-    public override void setup(Transform _caster, PlayerData data, System.Action<int> consumeMana)
+    public override bool finishedCasting()
     {
-        base.setup(_caster, data, consumeMana);
-        transform.parent = _caster;
-        damage = data.fireBallData.damage;
-        manaConsumption = data.fireBallData.manaConsumption;
-        areaOfEffect = data.fireBallData.areaOfEffect;
-        castSpeed = data.fireBallData.castSpeed;
-        burnDamage = data.fireBallData.burnDamage;
-        burnDuration = data.fireBallData.burnDuration;
+        return castTimer >= castTime; 
     }
+
 
     public override bool canCastSpell(int currMana)
     {
-        return currMana >= manaConsumption;
+        return isCasting ? true : currMana >= manaConsumption;
     }
 
     public override void startCasting(Vector3 referencePoint)
     {
         base.startCasting(referencePoint);
+        transform.parent = caster;
         consumeMana(manaConsumption);
-        manaConsumption = 0;
     }
 
     public override void onFullCast(Vector3 target)
     {
         transform.parent = null;
+        isCasting = false;
         StartCoroutine(moveTowardsTarget(target));
     }
 
     protected IEnumerator moveTowardsTarget(Vector3 target)
     {
-        
         while (Vector3.Distance(transform.position, target) > 1)//Changes here
         {
             transform.position += Vector3.Normalize(target - transform.position) * speedMultiplier;
             yield return new WaitForEndOfFrame();
         }
-        Destroy(Instantiate(explosion, transform.position, Quaternion.identity), 2f);
-        Destroy(gameObject, 0.01f);
+        explode();
     }
 
     protected void OnTriggerEnter(Collider other)
     {
         //StopAllCoroutines();
+        if(!isCasting && (other.gameObject.tag == "Monster" || other.gameObject.tag == "Terrain"))
+        {
+            Debug.Log(other.gameObject);
+            explode();
+        }
+    }
+
+    protected void explode()
+    {
+        StopAllCoroutines();
+        Explosion ex = Instantiate(explosion, transform.position, Quaternion.identity);
+        ex.setDamage(damage);
+        ex.gameObject.transform.localScale = new Vector3(areaOfEffect, areaOfEffect, areaOfEffect);
+        Destroy(ex.gameObject, 2f);
+        Destroy(gameObject, 0.01f);
     }
 }
