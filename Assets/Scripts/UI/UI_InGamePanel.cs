@@ -14,6 +14,10 @@ public class UI_InGamePanel : UI_Panel
     public Sprite fill_Img;
     public Sprite load_Img;
 
+    public UI_Skill fire_Skill;
+    public UI_Skill ice_Skill;
+    public UI_Skill earth_Skill;
+
     private PlayerControl player;
 
     public override void UI_Start()
@@ -28,6 +32,10 @@ public class UI_InGamePanel : UI_Panel
         mp_Bar.UI_Initialize();
         casting_Bar.UI_Initialize();
         casting_Bar.gameObject.SetActive(false);
+
+        fire_Skill.UI_Initialize();
+        ice_Skill.UI_Initialize();
+        earth_Skill.UI_Initialize();
 
         UpdateBarInfo();
     }
@@ -67,10 +75,63 @@ public class UI_InGamePanel : UI_Panel
         }
     }
 
+    public void SetSkillDisplay(SpellType spellType)
+    {
+        switch (spellType)
+        {
+            case SpellType.FIRE:
+                {
+                    fire_Skill.UI_SetActive(true);
+                    ice_Skill.UI_SetActive(false);
+                    earth_Skill.UI_SetActive(false);
+                    break;
+                }
+            case SpellType.ICE:
+                {
+                    fire_Skill.UI_SetActive(false);
+                    ice_Skill.UI_SetActive(true);
+                    earth_Skill.UI_SetActive(false);
+                    break;
+                }
+            case SpellType.EARTH:
+                {
+                    Debug.Log("DIDIDD");
+                    fire_Skill.UI_SetActive(false);
+                    ice_Skill.UI_SetActive(false);
+                    earth_Skill.UI_SetActive(true);
+                    break;
+                }
+        }
+
+    }
+
+    public void UpdateSkillInfo()
+    {
+        if(fire_Skill.UI_GetActive())
+        {
+            fire_Skill.UI_Update();
+        }
+        else if (ice_Skill.UI_GetActive())
+        {
+            ice_Skill.UI_Update();
+        }
+        else if (earth_Skill.UI_GetActive())
+        {
+            earth_Skill.UI_Update();
+        }
+    }
+
     public override void UI_Update()
     {
         UpdateBarInfo();
-        
+        UpdateSkillInfo();
     }
 
+
+}
+public enum SpellType
+{
+    FIRE,
+    ICE,
+    EARTH
 }
