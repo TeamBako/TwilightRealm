@@ -59,7 +59,7 @@ public class FireBall : SpellHandler
     private float speedMultiplier;
 
     [SerializeField]
-    private Explosion explosion; //replace with proper explosion calculations
+    private GameObject explosion;
 
     public override bool finishedCasting()
     {
@@ -101,7 +101,6 @@ public class FireBall : SpellHandler
         //StopAllCoroutines();
         if(!isCasting && (other.gameObject.tag == "Monster" || other.gameObject.tag == "Terrain"))
         {
-            Debug.Log(other.gameObject);
             explode();
         }
     }
@@ -109,9 +108,18 @@ public class FireBall : SpellHandler
     protected void explode()
     {
         StopAllCoroutines();
-        Explosion ex = Instantiate(explosion, transform.position, Quaternion.identity);
-        ex.setDamage(damage);
-        ex.gameObject.transform.localScale = new Vector3(areaOfEffect, areaOfEffect, areaOfEffect);
+        GameObject ex = Instantiate(explosion, transform.position, Quaternion.identity);
+        ex.transform.localScale = new Vector3(areaOfEffect, areaOfEffect, areaOfEffect);
+        Collider[] cols = Physics.OverlapSphere(transform.position, areaOfEffect * 5);
+        
+        foreach(Collider c in cols)
+        {
+            Debug.Log(c.gameObject);
+            if (c.tag == "Monster")
+            {
+                c.GetComponent<AIController>().takeDamage(damage);
+            }
+        }
         Destroy(ex.gameObject, 2f);
         Destroy(gameObject, 0.01f);
     }

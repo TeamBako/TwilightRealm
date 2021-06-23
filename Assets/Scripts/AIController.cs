@@ -123,7 +123,6 @@ public class AIController : EntityStateControl
 
     public virtual void attackEvent()
     {
-        Debug.Log("hit");
         target.takeDamage(damage);
     }
 
