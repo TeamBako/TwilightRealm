@@ -192,14 +192,17 @@ public class PlayerControl : EntityStateControl
             if (Input.GetKeyDown(KeyCode.E))
             {
                 selectedSpell = fireBall;
+                UIManager.Instance.SetSkillHighlight(SpellType.FIRE);
             }
             else if (Input.GetKeyDown(KeyCode.R))
             {
                 selectedSpell = frostBreath;
+                UIManager.Instance.SetSkillHighlight(SpellType.ICE);
             }
             else if (Input.GetKeyDown(KeyCode.T))
             {
                 selectedSpell = rockDOT;
+                UIManager.Instance.SetSkillHighlight(SpellType.EARTH);
             }
             else if (Input.GetMouseButtonDown(0) && selectedSpell != null)
             {
@@ -233,7 +236,6 @@ public class PlayerControl : EntityStateControl
             if (handler.canCastSpell(currentMP))
             {
                 handler.whileCasting(getMousePositionInWorldSpace(castPoint.transform.position.y));
-                Debug.Log(handler.percentageCompletion());
                 yield return new WaitForSeconds(0.1f);
 
             } else

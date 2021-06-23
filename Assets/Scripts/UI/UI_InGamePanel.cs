@@ -95,7 +95,6 @@ public class UI_InGamePanel : UI_Panel
                 }
             case SpellType.EARTH:
                 {
-                    Debug.Log("DIDIDD");
                     fire_Skill.UI_SetActive(false);
                     ice_Skill.UI_SetActive(false);
                     earth_Skill.UI_SetActive(true);

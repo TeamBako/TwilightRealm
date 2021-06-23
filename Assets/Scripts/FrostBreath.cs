@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,12 +6,80 @@ using UnityEngine;
 public class FrostBreath : SpellHandler
 {
     #region DeterminedData
-    private int damagePerSecond;
-    private int manaConsumptionRate;
     private float areaOfCone;
     private float slowEffect;
     private float slowDuration;
     #endregion
+
+    [SerializeField]
+    private int baseDPS, baseManaConsumptionRate, baseAngle;
+
+    [SerializeField]
+    private float baseRange, baseSlowEffect, baseSlowDuration;
+
+    [SerializeField]
+    private int dpsPerLevel, manaConsumptionPerLevel, anglePerLevel;
+
+    [SerializeField]
+    private float rangePerLevel, slowEffectPerLevel, slowDurationPerLevel;
+
+    protected float tickTimer = 0;
+
+    protected float tickRate = 0.5f;
+    protected int manaConsumption
+    {
+        get
+        {
+            int curr = baseManaConsumptionRate - manaConsumptionPerLevel 
+                * refData.frostBreathData.manaConsumptionRate;
+            return curr >= 0 ? curr : 0;
+        }
+    }
+
+    protected int damagePerSecond
+    {
+        get
+        {
+            return baseDPS + dpsPerLevel * refData.frostBreathData.damagePerSecond;
+        }
+    }
+
+    protected float range
+    {
+        get
+        {
+            return baseRange + rangePerLevel * refData.frostBreathData.areaOfCone;
+        }
+    }
+
+    protected int width
+    {
+        get
+        {
+            int wid = baseAngle + anglePerLevel * refData.frostBreathData.areaOfCone;
+            return wid < 80 ? wid : 80;
+        }
+    }
+
+    public override void setup(Transform _caster, PlayerData data, Action<int> cMana)
+    {
+        base.setup(_caster, data, cMana);
+        ParticleSystem[] ps = GetComponentsInChildren<ParticleSystem>();
+        Debug.Log(width);
+        Debug.Log(range / baseRange);
+        foreach (ParticleSystem s in ps)
+        {
+            ParticleSystem.MainModule mm = s.main;
+            mm.startSpeed = mm.startSpeed.constant * range/baseRange;
+            ParticleSystem.ShapeModule sm = s.shape;
+            sm.angle = width;
+            ParticleSystem.MinMaxCurve em = s.emission.rateOverTime;
+            em.constantMax = em.constantMax * Mathf.Pow(range / baseRange, 1);
+            em.constantMin = em.constantMin * Mathf.Pow(range / baseRange, 1);
+            ParticleSystem.EmissionModule e = s.emission;
+            e.rateOverTime = em;
+        }
+    }
 
     public override float percentageCompletion()
     {
@@ -20,11 +89,68 @@ public class FrostBreath : SpellHandler
     {
         return true;
     }
-    public override bool canCastSpell(int currMana)
+
+    protected override void Update()
     {
-        return currMana >= manaConsumptionRate;
+        base.Update();
+        tickTimer += Time.deltaTime;
+        if(tickTimer >= tickRate && isCasting)
+        {
+            tick();
+            tickTimer = 0;
+        }
     }
 
+    protected void tick()
+    {
+        consumeMana(manaConsumption);
+        Vector3 front = new Vector3(transform.forward.x, 0, transform.forward.z).normalized;
+        List<AIController> damaged = new List<AIController>();
+        for(int i = -width; i <= width; i += 5)
+        {
+            RaycastHit hit;
+            if(Physics.Raycast(transform.position, Quaternion.Euler(0, i, 0) * front, out hit, range))
+            {
+                if(hit.collider.tag == "Monster")
+                {
+                    AIController con = hit.collider.GetComponent<AIController>();
+                    if (!damaged.Contains(con))
+                    {
+                        damaged.Add(con);
+                        con.takeDamage(Mathf.CeilToInt(damagePerSecond * tickRate));
+                    }
+                }
+            }
+        }
+        //Collider[] hits = Physics.OverlapSphere(transform.position, range); //get all colliders within sphere
+        //foreach(Collider col in hits)
+        //{
+        //    if (col.tag == "Monster")
+        //    {
+        //        Vector3 front = new Vector3(transform.forward.x, 0, transform.forward.z).normalized;
+        //        Vector3 dir = col.transform.position - transform.position;
+        //        dir = new Vector3(dir.x, 0, dir.z).normalized;
+        //        float rad = Mathf.Acos(Vector3.Dot(front, dir));
+        //        float deg = rad * (180 / Mathf.PI);
+        //        Debug.Log(deg);
+        //        if (deg <= width)
+        //        {
+        //            col.GetComponent<AIController>().takeDamage((int)(damagePerSecond * tickRate));
+        //        }
+        //    }
+        //}
+    }
+
+    public override bool canCastSpell(int currMana)
+    {
+        return currMana >= manaConsumption;
+    }
+
+    public override void startCasting(Vector3 referencePoint)
+    {
+        base.startCasting(referencePoint);
+        transform.parent = caster;
+    }
     // Start is called before the first frame update
     public override void whileCasting(Vector3 referencePoint)
     {
@@ -33,14 +159,23 @@ public class FrostBreath : SpellHandler
         Vector3 pos = referencePoint;
         pos.y = transform.position.y;
         transform.LookAt(pos);
-        consumeMana(manaConsumptionRate);
     }
 
 
     public override void onFullCast(Vector3 referencePoint)
     {
+        isCasting = false;
         base.onFullCast(referencePoint);
         transform.parent = null;
+        ParticleSystem[] ps = GetComponentsInChildren<ParticleSystem>();
+        foreach(ParticleSystem s in ps)
+        {
+            ParticleSystem.EmissionModule em = s.emission;
+            em.enabled = false;
+        }
         Destroy(gameObject, 0.5f);
     }
+
+    
+    
 }
