@@ -49,8 +49,13 @@ public class PlayerControl : EntityStateControl
         pData = data;
         currentHP = getMaxHP();
         currentMP = getMaxMP();
-        speedMultiplier = getMovementSpeed();
-        
+        speedMultiplier = getMovementSpeed();  
+    }
+
+    public void reset()
+    {
+        currentHP = getMaxHP();
+        currentMP = getMaxMP();
     }
 
     public PlayerData PlayerData
@@ -125,6 +130,11 @@ public class PlayerControl : EntityStateControl
     {
         base.enterDeath();
         enterMState(EntityMovementState.STATIONARY);
+        StopAllCoroutines();
+        if (castedSpell)
+        {
+            Destroy(castedSpell.gameObject);
+        }
         anim.SetBool("Death", true);
     }
 
@@ -163,7 +173,7 @@ public class PlayerControl : EntityStateControl
         {
             horizontalDir += 1;
         }
-        Vector3 speed = new Vector3(horizontalDir, 0, verticalDir) * speedMultiplier;
+        Vector3 speed = new Vector3(horizontalDir, 0, verticalDir) * getMovementSpeed();
         transform.LookAt(getMousePositionInWorldSpace(transform.position.y));
         if(speed == Vector3.zero)
         {

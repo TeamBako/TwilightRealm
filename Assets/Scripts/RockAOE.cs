@@ -11,11 +11,30 @@ public class RockAOE : MonoBehaviour
 
     protected float timer;
 
+    [SerializeField]
+    protected List<ParticleSystem> rocks;
+
+    [SerializeField]
+    protected List<ParticleSystem> scalable;
+
     public void setup(int dot, float aoe, float dur)
     {
         damageOverTime = dot;
-        transform.localScale = new Vector3(aoe, aoe, aoe);
         areaOfEffect = aoe;
+        foreach (ParticleSystem ps in rocks)
+        {
+            ParticleSystem.ShapeModule sh = ps.shape;
+            sh.radius = sh.radius * aoe;
+            ParticleSystem.MinMaxCurve em = ps.emission.rateOverTime;
+            em.constant = em.constant * aoe;
+            ParticleSystem.EmissionModule e = ps.emission;
+            e.rateOverTime = em;
+        }
+
+        foreach (ParticleSystem ps in scalable)
+        {
+            ps.transform.localScale = new Vector3(aoe, aoe, aoe);
+        }
         Destroy(gameObject, dur);
     }
 
@@ -25,7 +44,7 @@ public class RockAOE : MonoBehaviour
         if(timer >= 0.5f)
         {
             timer = 0;
-            Collider[] cols = Physics.OverlapSphere(transform.position, areaOfEffect * 5);
+            Collider[] cols = Physics.OverlapSphere(transform.position, areaOfEffect * 4.5f);
             
             foreach(Collider c in cols)
             {

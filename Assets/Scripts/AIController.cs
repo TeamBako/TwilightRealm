@@ -55,17 +55,20 @@ public class AIController : EntityStateControl
     protected override void handleMovement()
     {
         base.handleMovement();
-        Vector3 dir = (target.transform.position - transform.position).normalized;
-        Vector3 speed = dir * speedMultiplier;
-        transform.LookAt(
-            new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
-        if (Vector3.Distance(target.transform.position, transform.position) <= range)
+        if (attacking == false)
         {
-            enterCState(EntityCombatState.COMBAT);
-        }
-        else
-        {
-            rb.velocity = speed;
+            Vector3 dir = (target.transform.position - transform.position).normalized;
+            Vector3 speed = dir * speedMultiplier;
+            transform.LookAt(
+                new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
+            if (Vector3.Distance(target.transform.position, transform.position) <= range)
+            {
+                enterCState(EntityCombatState.COMBAT);
+            }
+            else
+            {
+                rb.velocity = speed;
+            }
         }
     }
 
@@ -119,8 +122,14 @@ public class AIController : EntityStateControl
         base.enterDeath();
         enterMState(EntityMovementState.STATIONARY);
         anim.SetBool("Death", true);
+        StartCoroutine(disableAI());
     }
 
+    protected IEnumerator disableAI()
+    {
+        yield return new WaitForSeconds(5);
+        gameObject.SetActive(false);
+    }
     public virtual void attackEvent()
     {
         target.takeDamage(damage);
