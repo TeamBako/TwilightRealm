@@ -122,8 +122,14 @@ public class AIController : EntityStateControl
         base.enterDeath();
         enterMState(EntityMovementState.STATIONARY);
         anim.SetBool("Death", true);
+        StartCoroutine(disableAI());
     }
 
+    protected IEnumerator disableAI()
+    {
+        yield return new WaitForSeconds(5);
+        gameObject.SetActive(false);
+    }
     public virtual void attackEvent()
     {
         target.takeDamage(damage);
