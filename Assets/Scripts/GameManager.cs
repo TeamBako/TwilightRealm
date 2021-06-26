@@ -119,22 +119,26 @@ public class GameManager : MonoBehaviour
         if (waveStarted)
         {
             bool isDone = true;
+            int mobCount = 0;
 
             foreach(AIController mob in spawnedmobList)
             {
                 if(!mob.isDead())
                 {
                     isDone = false;
-                    break;
+                    mobCount++;
                 }
             }
 
-            if (isDone)
+            UIManager.Instance.SetMobNoText(mobCount);
+
+            if (isDone) //EndOfWaveCalls
             {
                 waveStarted = false;
                 UIManager.Instance.EndOfWaveAction();
                 pGameData.waveNo += 1;
                 UIManager.Instance.SetWaveStatus(pGameData.waveNo);
+                player.reset();
             }
         }
     }

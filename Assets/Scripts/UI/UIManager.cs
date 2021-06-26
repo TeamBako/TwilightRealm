@@ -66,6 +66,11 @@ public class UIManager : MonoBehaviour
         }
     }
     
+    public void SetMobNoText(int num)
+    {
+        inGamePanel.UpdateMobNoText(num);
+    }
+
     public void SetWaveStatus(int waveNo)
     {
         inGamePanel.SetWaveStatus(waveNo);

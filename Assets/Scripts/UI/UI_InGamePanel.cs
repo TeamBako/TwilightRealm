@@ -18,6 +18,8 @@ public class UI_InGamePanel : UI_Panel
     public UI_Skill ice_Skill;
     public UI_Skill earth_Skill;
 
+    public Text mobNo_Text;
+
     public Text wave_Text;
 
     private PlayerControl player;
@@ -42,6 +44,11 @@ public class UI_InGamePanel : UI_Panel
         earth_Skill.UI_Initialize();
 
         UpdateBarInfo();
+    }
+
+    public void UpdateMobNoText(int num)
+    {
+        mobNo_Text.text = num.ToString();
     }
 
     public void UpdateBarInfo()
