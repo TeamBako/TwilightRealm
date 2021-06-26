@@ -14,7 +14,7 @@ public class MobSpawningInformation : ScriptableObject
 
     public int GetNoOfMobToSpawn(int wave)
     {
-        return mobQuantity + (additonalMobPerSession * (wave / mobWavePerSession));
+        return mobQuantity + (additonalMobPerSession * ((wave - 1) / mobWavePerSession));
     }
 
     public GameObject GetRandomMob()

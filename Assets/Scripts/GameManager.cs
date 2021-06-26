@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
@@ -42,11 +42,18 @@ public class GameManager : MonoBehaviour
     public void activate(GameData data)
     {
         pGameData = data;
+        UIManager.Instance.SetWaveStatus(pGameData.waveNo);
     }
 
     public GameData deactivate()
     {
         return pGameData;
+    }
+
+    public void ResetGame()
+    {
+        SystemManager.Instance.ResetPlayerData();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void StartWave()
@@ -127,6 +134,7 @@ public class GameManager : MonoBehaviour
                 waveStarted = false;
                 UIManager.Instance.EndOfWaveAction();
                 pGameData.waveNo += 1;
+                UIManager.Instance.SetWaveStatus(pGameData.waveNo);
             }
         }
     }

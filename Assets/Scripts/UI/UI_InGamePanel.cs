@@ -18,6 +18,8 @@ public class UI_InGamePanel : UI_Panel
     public UI_Skill ice_Skill;
     public UI_Skill earth_Skill;
 
+    public Text wave_Text;
+
     private PlayerControl player;
 
     public override void UI_Start()
@@ -75,6 +77,11 @@ public class UI_InGamePanel : UI_Panel
             casting_Bar.SetUIPercentage(0);
             casting_Bar.fill.GetComponent<Image>().sprite = load_Img;
         }
+    }
+
+    public void SetWaveStatus(int waveNo)
+    {
+        wave_Text.text = "Wave " + waveNo;
     }
 
     public void SetSkillDisplay(SpellType spellType)

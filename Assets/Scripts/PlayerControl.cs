@@ -136,6 +136,7 @@ public class PlayerControl : EntityStateControl
             Destroy(castedSpell.gameObject);
         }
         anim.SetBool("Death", true);
+        UIManager.Instance.DisplayPlayerDead();
     }
 
     protected override void enterMovement()
@@ -192,10 +193,10 @@ public class PlayerControl : EntityStateControl
 
     protected override void handleCombat()
     {
-        if(regenTimer >= 1)
+        if (regenTimer >= 1)
         {
-            currentHP = baseHPRegen + currentHP > getMaxHP() ? getMaxHP() : baseHPRegen + currentHP;
-            currentMP = baseMPRegen + currentMP > getMaxMP() ? getMaxMP() : baseMPRegen + currentMP;
+            currentHP = getHPRegen() + currentHP > getMaxHP() ? getMaxHP() : getHPRegen() + currentHP;
+            currentMP = getMPRegen() + currentMP > getMaxMP() ? getMaxMP() : getMPRegen() + currentMP;
             regenTimer = 0;
         }
         else
