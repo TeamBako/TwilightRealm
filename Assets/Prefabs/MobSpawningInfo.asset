@@ -17,3 +17,5 @@ MonoBehaviour:
   mobWavePerSession: 1
   allMonsterPrefab:
   - {fileID: 1980524105238717384, guid: d99ca9e355c25ba42b0c4ca12e79496f, type: 3}
+  - {fileID: 7313005035877453014, guid: 7f9ead5fd9946764380fc18d4385daa6, type: 3}
+  - {fileID: 636646794196431135, guid: 52673b77a3ddf2f41925757e5c6da56d, type: 3}

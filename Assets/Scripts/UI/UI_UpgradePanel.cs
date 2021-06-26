@@ -104,6 +104,7 @@ public class UI_UpgradePanel : UI_Panel
     {
         player.PlayerData.availableUpgradePoint += number;
         UpdateSkillPointsInfo();
+        UpdateAllInfo();
     }
 
     public void UpdateSkillPointsInfo()
