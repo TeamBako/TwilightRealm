@@ -11,12 +11,19 @@ public abstract class UI_Panel : MonoBehaviour
     private CanvasGroup canvasGroup;
     private bool isOn;
 
-    public virtual void UI_Awake() { }
+    public virtual void UI_Awake() 
+    {
+        canvasGroup = GetComponent<CanvasGroup>();
+
+        gameObject.SetActive(true);
+    }
     public virtual void UI_Start() { }
+    public virtual void UI_Initialize() { }
     public virtual void UI_Update() { }
 
     public void TogglePanel(bool state)
-    {
+    {        
+        isOn = state;
         switch (transition)
         {
             case Transition.NONE:
@@ -25,25 +32,12 @@ public abstract class UI_Panel : MonoBehaviour
                 }
             case Transition.INSTANT:
                 {
-                    canvasGroup.alpha = (state) ? 1 : 0;
+                    canvasGroup.alpha = (isOn) ? 1 : 0;
                     break;
                 }
         }
-        isOn = state;
-        canvasGroup.interactable = state;
-    }
 
-
-    private void Awake()
-    {
-        UI_Awake();
-        canvasGroup = GetComponent<CanvasGroup>();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        TogglePanel(false);
-        UI_Start();
+        canvasGroup.interactable = isOn;
+        canvasGroup.blocksRaycasts = isOn;
     }
 }

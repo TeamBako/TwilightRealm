@@ -22,6 +22,7 @@ public abstract class EntityStateControl : MonoBehaviour
 
     protected EntityMovementState currentMState;
 
+    [SerializeField]
     protected EntityCombatState currentCState;
 
     protected Animator anim;
@@ -125,6 +126,11 @@ public abstract class EntityStateControl : MonoBehaviour
         {
             enterCState(EntityCombatState.DEATH);
         }
+    }
+
+    public bool isDead()
+    {
+        return currentCState == EntityCombatState.DEATH;
     }
 
     public abstract int getCurrentHP();

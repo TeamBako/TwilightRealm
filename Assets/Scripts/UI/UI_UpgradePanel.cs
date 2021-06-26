@@ -49,18 +49,27 @@ public class UI_UpgradePanel : UI_Panel
     private PlayerControl player;
 
     public override void UI_Start()
-    {
-        player = PlayerControl.Instance;
-        UI_Initialize();
+    {        
+        base.UI_Start();
+        TogglePanel(false);
     }
 
-    public void UI_Initialize()
+    public override void UI_Initialize()
     {
+        base.UI_Initialize();
+        player = PlayerControl.Instance;
+
+        //LevelUpSkillPoints(1);
         fireUpgrade.SetTabActive(false);
         iceUpgrade.SetTabActive(false);
         earthUpgrade.SetTabActive(false);
 
         SelectTab(statUpgrade);
+        UpdateAllInfo();
+    }
+
+    public void UpdateAllInfo()
+    {
         UpdateSkillPointsInfo();
 
         UpdateAllStatInfo();
@@ -74,10 +83,6 @@ public class UI_UpgradePanel : UI_Panel
 
         UpdateAllEarthInfo();
         UpdateEarthButtonStatus();
-    }
-
-    public override void UI_Update()
-    {
     }
 
     public void SelectTab(UI_Tab newTab)
@@ -155,9 +160,9 @@ public class UI_UpgradePanel : UI_Panel
                     PlayerControl.Instance.PlayerData.movementSpeed += 1;
                     break;
                 }
-        }
-        UpdateAllStatInfo();
+        }        
         LevelUpSkillPoints(-1);
+        UpdateAllStatInfo();
         UpdateStatButtonStatus();
     }
 
@@ -221,8 +226,9 @@ public class UI_UpgradePanel : UI_Panel
                     break;
                 }
         }
+
+        LevelUpSkillPoints(-1);        
         UpdateAllFireInfo();
-        LevelUpSkillPoints(-1);
         UpdateFireButtonStatus();
     }
 
@@ -279,8 +285,9 @@ public class UI_UpgradePanel : UI_Panel
                     break;
                 }
         }
-        UpdateAllIceInfo();
+
         LevelUpSkillPoints(-1);
+        UpdateAllIceInfo();
         UpdateIceButtonStatus();
     }
 
@@ -337,8 +344,9 @@ public class UI_UpgradePanel : UI_Panel
                     break;
                 }
         }
+
+        LevelUpSkillPoints(-1);        
         UpdateAllEarthInfo();
-        LevelUpSkillPoints(-1);
         UpdateEarthButtonStatus();
     }
 

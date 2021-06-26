@@ -22,12 +22,14 @@ public class UI_InGamePanel : UI_Panel
 
     public override void UI_Start()
     {
-        player = PlayerControl.Instance;
-        UI_Initialize();
+        base.UI_Start();
     }
 
-    public void UI_Initialize()
+    public override void UI_Initialize()
     {
+        base.UI_Initialize();
+        player = PlayerControl.Instance;
+
         hp_Bar.UI_Initialize();
         mp_Bar.UI_Initialize();
         casting_Bar.UI_Initialize();
