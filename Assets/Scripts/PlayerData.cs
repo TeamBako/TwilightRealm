@@ -15,6 +15,9 @@ public class PlayerData
     public FireBallData fireBallData;
     public FrostBreathData frostBreathData;
     public RockDOTData rockDOTData;
+
+    public int availableUpgradePoint;
+
     public PlayerData()
     {
         maxHP = 0;

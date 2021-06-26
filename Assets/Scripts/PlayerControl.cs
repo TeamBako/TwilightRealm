@@ -53,6 +53,12 @@ public class PlayerControl : EntityStateControl
         
     }
 
+    public PlayerData PlayerData
+    {
+        get { return pData; }
+        set { pData = value; }
+    }
+
     protected int getHPRegen()
     {
         return baseHPRegen + hPRegenPerLevel * pData.hPRegen;
