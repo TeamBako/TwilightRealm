@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour
 
     public UI_InGamePanel inGamePanel;
     public UI_UpgradePanel upgradePanel;
+    public UI_DeadPanel deadPanel;
 
     public RectTransform startWaveButton;
     public RectTransform infoDisplay;
@@ -28,6 +29,7 @@ public class UIManager : MonoBehaviour
 
         inGamePanel.UI_Awake();
         upgradePanel.UI_Awake();
+        deadPanel.UI_Awake();
     }
 
 
@@ -35,12 +37,14 @@ public class UIManager : MonoBehaviour
     {
         inGamePanel.UI_Start();
         upgradePanel.UI_Start();
+        deadPanel.UI_Start();
     }
 
     public void UI_Initialize()
     {
         inGamePanel.UI_Initialize();
         upgradePanel.UI_Initialize();
+        deadPanel.UI_Initialize();
         SetCurrentPanel(inGamePanel);
         showInfoDisplay = false;
         infoDisplay.gameObject.SetActive(false);
@@ -60,6 +64,21 @@ public class UIManager : MonoBehaviour
             showInfoDisplay = false;
             infoDisplay.gameObject.SetActive(false);
         }
+    }
+    
+    public void SetWaveStatus(int waveNo)
+    {
+        inGamePanel.SetWaveStatus(waveNo);
+    }
+
+    public void DisplayPlayerDead()
+    {
+        SetCurrentPanel(deadPanel);
+    }
+
+    public void RestartGame()
+    {
+        GameManager.Instance.ResetGame();
     }
 
     public void EndOfWaveAction()
