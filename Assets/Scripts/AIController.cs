@@ -16,16 +16,18 @@ public class AIController : EntityStateControl
         enterMState(EntityMovementState.MOVING);
     }
 
+    #region Balance
+    [SerializeField]
+    protected int baseDamage, damagePerWave;
+    [SerializeField]
+    protected int baseHP, hpPerWave;
+    #endregion
+
     #region CombatValues
-    [SerializeField]
-    protected int damage;
-    [SerializeField]
-    protected int currentHP, maxHP;
+    protected int currentHP, maxHP, damage;
     #endregion
 
     #region SetByProgression
-
-
     public override int getMaxHP()
     {
         return maxHP;
@@ -46,9 +48,16 @@ public class AIController : EntityStateControl
         return currentHP;
     }
 
-    public virtual void setDamage(int value)
+    protected void setDamage(int dmg)
     {
-        damage = value;
+        damage = dmg;
+    }
+
+    public void setup(int waveNo)
+    {
+        setCurrentHP(baseHP + hpPerWave * waveNo);
+        setMaxHP(baseHP + hpPerWave * waveNo);
+        setDamage(baseDamage + damagePerWave * waveNo);
     }
     #endregion
 

@@ -101,8 +101,9 @@ public class GameManager : MonoBehaviour
 
 
             GameObject mobPrefab = mobSpawningInfo.GetRandomMob();
-            GameObject spawnedMob = Instantiate(mobPrefab, spawnPosition, mobPrefab.transform.rotation);
-            spawnedmobList.Add(spawnedMob.GetComponent<AIController>());
+            AIController spawnedMob = Instantiate(mobPrefab, spawnPosition, mobPrefab.transform.rotation).GetComponent<AIController>();
+            spawnedMob.setup(pGameData.waveNo);
+            spawnedmobList.Add(spawnedMob);
         }
 
         waveStarted = true;

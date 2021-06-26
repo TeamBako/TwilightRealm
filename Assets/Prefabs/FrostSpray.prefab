@@ -14364,7 +14364,7 @@ MonoBehaviour:
   baseRange: 5
   baseSlowEffect: 0
   baseSlowDuration: 0
-  dpsPerLevel: 1
+  dpsPerLevel: 5
   manaConsumptionPerLevel: 1
   anglePerLevel: 1
   rangePerLevel: 1

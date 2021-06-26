@@ -1550,11 +1550,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f73105f6be858894c9881132b499a3a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedMultiplier: 0.5
+  speedMultiplier: 1
+  currentCState: 0
   range: 3
-  damage: 50
-  currentHP: 500
-  maxHP: 500
+  baseDamage: 50
+  damagePerWave: 10
+  baseHP: 50
+  hpPerWave: 10
 --- !u!1 &636654531864796493
 GameObject:
   m_ObjectHideFlags: 0

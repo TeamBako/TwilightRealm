@@ -2277,10 +2277,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedMultiplier: 2
+  currentCState: 0
   range: 2
-  damage: 20
-  currentHP: 150
-  maxHP: 150
+  baseDamage: 20
+  damagePerWave: 5
+  baseHP: 40
+  hpPerWave: 10
 --- !u!1 &3052070326703086218
 GameObject:
   m_ObjectHideFlags: 0
