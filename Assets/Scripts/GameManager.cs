@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     
 
     [SerializeField]
-    private bool gamePaused;
+    private bool gamePaused = false;
 
     private void Awake()
     {
@@ -19,7 +19,6 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gamePaused = false;
     }
 
     // Update is called once per frame
