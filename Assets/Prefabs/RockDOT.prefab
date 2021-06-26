@@ -19022,14 +19022,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseDOT: 10
   baseManaConsumption: 25
-  baseAOE: 1
+  baseAOE: 0.5
   baseDuration: 5
-  baseCastTime: 2
-  dotPerLevel: 2
+  baseCastTime: 4
+  dotPerLevel: 5
   manaConsumptionPerLevel: 3
-  aoePerLevel: 1
+  aoePerLevel: 0.25
   durationPerLevel: 2
-  castTimeMultiplierPerLevel: 0.05
+  castTimeMultiplierPerLevel: 0.9
   rockAOE: {fileID: -1972527051756379360, guid: 73eccb4539a3e1741a1b3e1045d19a1c, type: 3}
 --- !u!1 &1358287021406906499
 GameObject:

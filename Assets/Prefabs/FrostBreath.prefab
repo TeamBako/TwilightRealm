@@ -14340,15 +14340,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseDPS: 10
-  baseManaConsumptionRate: 1
+  baseManaConsumptionRate: 10
   baseAngle: 15
   baseRange: 5
   baseSlowEffect: 0
   baseSlowDuration: 0
-  dpsPerLevel: 1
-  manaConsumptionPerLevel: 0
-  anglePerLevel: 1
-  rangePerLevel: 1
+  dpsPerLevel: 5
+  manaConsumptionPerLevel: 1
+  anglePerLevel: 2
+  rangePerLevel: 2.5
   slowEffectPerLevel: 0
   slowDurationPerLevel: 0
 --- !u!1 &6936112889192908124

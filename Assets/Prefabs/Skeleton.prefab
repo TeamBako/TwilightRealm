@@ -2276,11 +2276,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f73105f6be858894c9881132b499a3a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedMultiplier: 1
+  speedMultiplier: 2
   range: 2
-  damage: 5
-  currentHP: 100
-  maxHP: 100
+  damage: 20
+  currentHP: 150
+  maxHP: 150
 --- !u!1 &3052070326703086218
 GameObject:
   m_ObjectHideFlags: 0
