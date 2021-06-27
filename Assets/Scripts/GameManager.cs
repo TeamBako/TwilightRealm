@@ -144,6 +144,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    #region tempHack
+    public void increaseWave()
+    {
+        pGameData.waveNo++;
+        UIManager.Instance.SetWaveStatus(pGameData.waveNo);
+    }
+    #endregion
     public void TogglePauseGame()
     {
         Time.timeScale = gamePaused ? 1 : 0;

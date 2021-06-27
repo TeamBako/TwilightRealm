@@ -78,6 +78,7 @@ public class UIManager : MonoBehaviour
 
     public void DisplayPlayerDead()
     {
+        inGamePanel.UpdateBarInfo();
         SetCurrentPanel(deadPanel);
     }
 
@@ -92,9 +93,16 @@ public class UIManager : MonoBehaviour
         currentTimer = infoDuration;
         infoDisplay.gameObject.SetActive(true);
         showInfoDisplay = true;
-        upgradePanel.LevelUpSkillPoints(1);
+        upgradePanel.LevelUpSkillPoints(3);
     }
 
+    #region TempHacks
+    public void hackUpgrade()
+    {
+        upgradePanel.LevelUpSkillPoints(3);
+    }
+
+    #endregion
     public void StartWaveAction()
     {
         startWaveButton.gameObject.SetActive(false);

@@ -11,7 +11,11 @@ public class SerializeManager
     public static void Save(string fileName, object obj)
     {
         fileName = "SerializedFiles/" + fileName;
-
+        string directoryPath = Path.Combine(Application.dataPath, "SerializedFiles");
+        if (!Directory.Exists(directoryPath))
+        {
+            Directory.CreateDirectory(directoryPath);
+        }
         MemoryStream memoryStream = new MemoryStream();
         binaryFormatter.Serialize(memoryStream, obj);
         string[] temp = new string[1];
