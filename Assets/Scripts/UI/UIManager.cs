@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
     public UI_InGamePanel inGamePanel;
     public UI_UpgradePanel upgradePanel;
     public UI_DeadPanel deadPanel;
+    public UI_PauseMenuPanel pausePanel;
 
     public RectTransform startWaveButton;
     public RectTransform infoDisplay;
@@ -16,6 +17,8 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     private UI_Panel currentPanel;
+
+    private UI_Panel previousPanel;
 
     [SerializeField]
     private float currentTimer;
@@ -30,6 +33,7 @@ public class UIManager : MonoBehaviour
         inGamePanel.UI_Awake();
         upgradePanel.UI_Awake();
         deadPanel.UI_Awake();
+        pausePanel.UI_Awake();
     }
 
 
@@ -38,6 +42,7 @@ public class UIManager : MonoBehaviour
         inGamePanel.UI_Start();
         upgradePanel.UI_Start();
         deadPanel.UI_Start();
+        pausePanel.UI_Start();
     }
 
     public void UI_Initialize()
@@ -45,6 +50,8 @@ public class UIManager : MonoBehaviour
         inGamePanel.UI_Initialize();
         upgradePanel.UI_Initialize();
         deadPanel.UI_Initialize();
+        pausePanel.UI_Initialize();
+
         SetCurrentPanel(inGamePanel);
         showInfoDisplay = false;
         infoDisplay.gameObject.SetActive(false);
@@ -116,11 +123,24 @@ public class UIManager : MonoBehaviour
         {
             //upgradePanel.UpdateAllInfo();
             SetCurrentPanel(upgradePanel);
-            GameManager.Instance.TogglePauseGame();
         }
         else if(currentPanel == upgradePanel)
         {
             SetCurrentPanel(inGamePanel);
+        }
+    }
+
+    public void ToggleEscapePanel()
+    {
+        if (currentPanel != pausePanel)
+        {
+            //upgradePanel.UpdateAllInfo();
+            SetCurrentPanel(pausePanel);
+            GameManager.Instance.TogglePauseGame();
+        }
+        else
+        {
+            SetCurrentPanel(previousPanel);
             GameManager.Instance.TogglePauseGame();
         }
     }
@@ -130,6 +150,7 @@ public class UIManager : MonoBehaviour
         if(currentPanel != null)
         {
             currentPanel.TogglePanel(false);
+            previousPanel = currentPanel;
         }
 
         currentPanel = newPanel;
@@ -142,6 +163,11 @@ public class UIManager : MonoBehaviour
         inGamePanel.SetSkillDisplay(spellType);
     }
 
+
+    public void QuitGame()
+    {
+        GameManager.Instance.QuitGame();
+    }
 
 }
 
