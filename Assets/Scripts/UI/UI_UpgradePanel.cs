@@ -43,6 +43,9 @@ public class UI_UpgradePanel : UI_Panel
     public UI_UpgradeField earthCastSpeed;
     public UI_UpgradeField earthDuration;
 
+    [Header("UI Toggle group")]
+    public UI_ToggleGroup toggleGroup;
+
     [Header("ETC")]
     public Text skillPointText;
 
@@ -52,6 +55,7 @@ public class UI_UpgradePanel : UI_Panel
     {        
         base.UI_Start();
         TogglePanel(false);
+        toggleGroup.UI_Start();
     }
 
     public override void UI_Initialize()

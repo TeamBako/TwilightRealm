@@ -19,7 +19,7 @@ public class UI_ToggleButton : MonoBehaviour
 
     public bool noImage;
 
-    public void Start()
+    public void UI_Start()
     {
         if (!noImage)
         {

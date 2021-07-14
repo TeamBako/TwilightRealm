@@ -10,6 +10,7 @@ public class UI_PauseMenuPanel : UI_Panel
     {
         base.UI_Start();
         TogglePanel(false);
+        optionMenu.UI_Start();
     }
 
     public override void UI_Initialize()

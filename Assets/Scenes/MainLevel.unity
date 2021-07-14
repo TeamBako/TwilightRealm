@@ -342,6 +342,7 @@ MonoBehaviour:
   earthAOE: {fileID: 2456205}
   earthCastSpeed: {fileID: 421491592}
   earthDuration: {fileID: 283689216}
+  toggleGroup: {fileID: 1201705274}
   skillPointText: {fileID: 1641820428}
 --- !u!225 &8004579
 CanvasGroup:
