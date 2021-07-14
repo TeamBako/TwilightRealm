@@ -22,6 +22,7 @@ public class SystemManager : MonoBehaviour
         activatePlayer();
         activateGame();
         loadGameSettings();
+        UIManager.Instance.UI_Start();
         UIManager.Instance.UI_Initialize();
     }
 

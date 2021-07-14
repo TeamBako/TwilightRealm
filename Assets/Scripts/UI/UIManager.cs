@@ -37,7 +37,7 @@ public class UIManager : MonoBehaviour
     }
 
 
-    public void Start()
+    public void UI_Start()
     {
         inGamePanel.UI_Start();
         upgradePanel.UI_Start();
