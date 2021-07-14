@@ -21,6 +21,7 @@ public class SystemManager : MonoBehaviour
     {
         activatePlayer();
         activateGame();
+        loadGameSettings();
         UIManager.Instance.UI_Initialize();
     }
 
@@ -69,9 +70,23 @@ public class SystemManager : MonoBehaviour
         SerializeManager.Save(gameFileName, GameManager.Instance.deactivate());
     }
 
+    private void loadGameSettings()
+    {
+        if (PlayerPrefs.HasKey("autoWave"))
+        {
+            GameManager.Instance.autoWaveStart = PlayerPrefs.GetInt("autoWave") != 0;
+        }
+    }
+
+    private void saveGameSettings()
+    {
+        PlayerPrefs.SetInt("autoWave", GameManager.Instance.autoWaveStart ? 1 : 0);
+    }
+
     private void OnDestroy()
     {
         savePlayerProgress();
+        saveGameSettings();
     }
 
 }

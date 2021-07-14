@@ -12,24 +12,63 @@ public class UI_ToggleButton : MonoBehaviour
     public bool isToggled;
 
     private Image image;
+    public Text textButton;
+    public bool selfToggle;
+
+    public GameObject toggleArea;
+
+    public bool noImage;
 
     public void Start()
     {
-        image = GetComponent<Image>();
-        image.sprite = (isToggled) ? onSprite : offSprite;
+        if (!noImage)
+        {
+            image = GetComponent<Image>();
+            image.sprite = (isToggled) ? onSprite : offSprite;
+
+        }
+        if (textButton != null)
+        {
+            textButton.text = (isToggled) ? "On" : "Off";
+        }
     }
 
     public void SetToggleState(bool status)
     {
         isToggled = status;
-        image.sprite = (isToggled) ? onSprite : offSprite;
+
+        if (!noImage)
+        {
+            image.sprite = (isToggled) ? onSprite : offSprite;
+        }
+
+        if (textButton != null)
+        {
+            textButton.text = (isToggled) ? "On" : "Off";
+        }
+
+        if (toggleArea != null)
+        {
+            toggleArea.SetActive(isToggled);
+        }
     }
 
     public void ToggleButton()
     {
-        if(!isToggled)
+        if (!selfToggle)
         {
-            toggleGroup.ToggleGroup(this);
+            if (!isToggled)
+            {
+                if (toggleGroup != null)
+                {
+                    toggleGroup.ToggleGroup(this);
+                }
+
+            }
+        }
+        else
+        {
+            SetToggleState(!isToggled);
         }
     }
 

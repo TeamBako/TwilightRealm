@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
     private bool waveStarted = false;
     private int currentWaveMobQuantity = 0;
 
+    public bool autoWaveStart = false;
+
     [SerializeField]
     private List<AIController> spawnedmobList = new List<AIController>();
 
@@ -112,12 +114,17 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.BackQuote))
+        if (!gamePaused && Input.GetKeyDown(KeyCode.BackQuote))
         { 
             UIManager.Instance.ToggleUpgradePanel();
         }
 
-        if (waveStarted)
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            UIManager.Instance.ToggleEscapePanel();
+        }
+
+        if (!gamePaused && waveStarted)
         {
             bool isDone = true;
             int mobCount = 0;
@@ -140,6 +147,11 @@ public class GameManager : MonoBehaviour
                 pGameData.waveNo += 1;
                 UIManager.Instance.SetWaveStatus(pGameData.waveNo);
                 player.reset();
+
+                if (autoWaveStart)
+                {
+                    UIManager.Instance.StartWaveAction();
+                }
             }
         }
     }
@@ -155,5 +167,15 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = gamePaused ? 1 : 0;
         gamePaused = !gamePaused;
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    public void SetAutoWaveStatus(bool status)
+    {
+        autoWaveStart = status;
     }
 }
