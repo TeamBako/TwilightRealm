@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,4 +25,13 @@ public class UI_PauseMenuPanel : UI_Panel
         optionMenu.gameObject.SetActive(!optionMenu.gameObject.activeSelf);
     }
 
+    public Vector3 GetSoundSettings()
+    {
+        return optionMenu.GetVolumeMixer();
+    }
+
+    public void LoadSoundSettings(Vector3 settings)
+    {
+        optionMenu.SetVolumeMixer(settings);
+    }
 }
