@@ -77,11 +77,20 @@ public class SystemManager : MonoBehaviour
         {
             GameManager.Instance.autoWaveStart = PlayerPrefs.GetInt("autoWave") != 0;
         }
+
+        if (PlayerPrefs.HasKey("Master"))
+        {
+            UIManager.Instance.LoadSoundSettings(new Vector3(PlayerPrefs.GetFloat("Master"), PlayerPrefs.GetFloat("BGM"), PlayerPrefs.GetFloat("SFX")));
+        }
     }
 
     private void saveGameSettings()
     {
         PlayerPrefs.SetInt("autoWave", GameManager.Instance.autoWaveStart ? 1 : 0);
+        Vector3 soundSettings = UIManager.Instance.GetSoundSettings();
+        PlayerPrefs.SetFloat("Master", soundSettings.x);
+        PlayerPrefs.SetFloat("BGM", soundSettings.y);
+        PlayerPrefs.SetFloat("SFX", soundSettings.z);
     }
 
     private void OnDestroy()
