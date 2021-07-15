@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -89,9 +90,15 @@ public class UIManager : MonoBehaviour
         SetCurrentPanel(deadPanel);
     }
 
-    public void RestartGame()
+    public void ResetGame()
     {
-        GameManager.Instance.ResetGame();
+        SystemManager.Instance.ResetPlayerData();
+        ChangeScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void ChangeScene(int sceneNo)
+    {
+        SceneManager.LoadScene(sceneNo);
     }
 
     public void EndOfWaveAction()

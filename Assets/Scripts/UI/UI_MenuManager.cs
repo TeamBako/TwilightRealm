@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UI_MenuManager : MonoBehaviour
 {
@@ -55,6 +56,17 @@ public class UI_MenuManager : MonoBehaviour
         currentPanel = newPanel;
 
         currentPanel.TogglePanel(true);
+    }
+
+    public void ResetGame()
+    {
+        SystemManager.Instance.ResetPlayerData();
+        ChangeScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void ChangeScene(int sceneNo)
+    {
+        SceneManager.LoadScene(sceneNo);
     }
 
     public void SaveGameSettings()

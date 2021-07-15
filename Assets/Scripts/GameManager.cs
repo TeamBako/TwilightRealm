@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
@@ -39,6 +39,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         player = PlayerControl.Instance;
+        gamePaused = false;
+        Time.timeScale = 1;
     }
 
     public void activate(GameData data)
@@ -55,16 +57,6 @@ public class GameManager : MonoBehaviour
         return pGameData;
     }
 
-    public void ResetGame()
-    {
-        SystemManager.Instance.ResetPlayerData();
-        ChangeScene(SceneManager.GetActiveScene().buildIndex);
-    }
-
-    public void ChangeScene(int sceneNo)
-    {
-        SceneManager.LoadScene(sceneNo);
-    }
 
     public void StartWave()
     {
