@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    public Vector3 camerUpperBounds;
+    public Vector3 camerLowerBounds;
+
     public Vector3 cameraOffset;
     public Transform playerRef;
     public float intensity = 1;
@@ -17,6 +20,26 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.transform.position = Vector3.Lerp(this.transform.position, playerRef.position + cameraOffset, intensity);
+        Vector3 tempPos = playerRef.position + cameraOffset;
+
+        if(tempPos.x < -camerLowerBounds.x)
+        {
+            tempPos.x = -camerLowerBounds.x;
+        }
+        else if (tempPos.x > camerUpperBounds.x)
+        {
+            tempPos.x = camerUpperBounds.x;
+        }
+
+        if (tempPos.z < -camerLowerBounds.z)
+        {
+            tempPos.z = -camerLowerBounds.z;
+        }
+        else if (tempPos.z > camerUpperBounds.z)
+        {
+            tempPos.z = camerUpperBounds.z;
+        }
+
+        this.transform.position = Vector3.Lerp(this.transform.position, tempPos, intensity);
     }
 }
