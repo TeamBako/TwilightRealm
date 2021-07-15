@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
@@ -39,12 +39,17 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         player = PlayerControl.Instance;
+        gamePaused = false;
+        Time.timeScale = 1;
     }
 
     public void activate(GameData data)
     {
         pGameData = data;
-        UIManager.Instance.SetWaveStatus(pGameData.waveNo);
+        if (!SystemManager.Instance.isMenu)
+        {
+            UIManager.Instance.SetWaveStatus(pGameData.waveNo);
+        }
     }
 
     public GameData deactivate()
@@ -52,11 +57,6 @@ public class GameManager : MonoBehaviour
         return pGameData;
     }
 
-    public void ResetGame()
-    {
-        SystemManager.Instance.ResetPlayerData();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
 
     public void StartWave()
     {
@@ -170,10 +170,6 @@ public class GameManager : MonoBehaviour
         gamePaused = !gamePaused;
     }
 
-    public void QuitGame()
-    {
-        Application.Quit();
-    }
 
     public void SetAutoWaveStatus(bool status)
     {

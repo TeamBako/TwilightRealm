@@ -16,17 +16,22 @@ public class UI_OptionMenu : MonoBehaviour
 
     public AudioMixer mixer;
 
-    public void HandleMasterSliderValueChange()
+    public void HandleMasterSliderValueChange(float value)
     {
-        mixer.SetFloat("Master", (masterSlider.value * 80) - 80);
+        SetLevel("Master", value);
     }
-    public void HandleBGMSliderValueChange()
+    public void HandleBGMSliderValueChange(float value)
     {
-        mixer.SetFloat("BGM", (bgmSlider.value * 80) - 80);
+        SetLevel("BGM", value);
     }
-    public void HandleSFXSliderValueChange()
+    public void HandleSFXSliderValueChange(float value)
     {
-        mixer.SetFloat("SFX", (sfxSlider.value * 80) - 80);
+        SetLevel("SFX", value);
+    }
+
+    public void SetLevel(string name, float value)
+    {
+        mixer.SetFloat(name, Mathf.Log10(value) * 20);
     }
 
     public void SetAutoWaveStatus(UI_ToggleButton button)
@@ -38,10 +43,10 @@ public class UI_OptionMenu : MonoBehaviour
     {
         masterSlider.value = soundLevel.x;
         bgmSlider.value = soundLevel.y;
-        sfxSlider.value = soundLevel.z;
-        HandleMasterSliderValueChange();
-        HandleBGMSliderValueChange();
-        HandleSFXSliderValueChange();
+        sfxSlider.value = soundLevel.z; 
+        HandleMasterSliderValueChange(masterSlider.value);
+        HandleBGMSliderValueChange(bgmSlider.value);
+        HandleSFXSliderValueChange(sfxSlider.value);
     }
 
     public Vector3 GetVolumeMixer()
@@ -51,14 +56,20 @@ public class UI_OptionMenu : MonoBehaviour
 
     public void UI_Start()
     {
-        gameOptionButton.UI_Start();
+        if (!SystemManager.Instance.isMenu)
+        {
+            gameOptionButton.UI_Start();
+        }
         autoWaveButton.UI_Start();
     }
 
     public void UI_Initialize()
     {
-        gameOptionButton.isToggled = false;
-        gameOptionButton.SetToggleState(false);
+        if (!SystemManager.Instance.isMenu)
+        {
+            gameOptionButton.isToggled = false;
+            gameOptionButton.SetToggleState(false);
+        }
         autoWaveButton.SetToggleState(GameManager.Instance.autoWaveStart);
     }
 }
