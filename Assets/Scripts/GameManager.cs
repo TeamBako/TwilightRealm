@@ -44,7 +44,10 @@ public class GameManager : MonoBehaviour
     public void activate(GameData data)
     {
         pGameData = data;
-        UIManager.Instance.SetWaveStatus(pGameData.waveNo);
+        if (!SystemManager.Instance.isMenu)
+        {
+            UIManager.Instance.SetWaveStatus(pGameData.waveNo);
+        }
     }
 
     public GameData deactivate()
@@ -55,7 +58,12 @@ public class GameManager : MonoBehaviour
     public void ResetGame()
     {
         SystemManager.Instance.ResetPlayerData();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        ChangeScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void ChangeScene(int sceneNo)
+    {
+        SceneManager.LoadScene(sceneNo);
     }
 
     public void StartWave()
@@ -170,10 +178,6 @@ public class GameManager : MonoBehaviour
         gamePaused = !gamePaused;
     }
 
-    public void QuitGame()
-    {
-        Application.Quit();
-    }
 
     public void SetAutoWaveStatus(bool status)
     {

@@ -10,6 +10,7 @@ public class SystemManager : MonoBehaviour
     private string playerFileName = "PlayerInfo";
     private string gameFileName = "GameInfo";
 
+    public bool isMenu;
 
     private void Awake()
     {
@@ -22,8 +23,16 @@ public class SystemManager : MonoBehaviour
         activatePlayer();
         activateGame();
         loadGameSettings();
-        UIManager.Instance.UI_Start();
-        UIManager.Instance.UI_Initialize();
+        if (!isMenu)
+        {
+            UIManager.Instance.UI_Start();
+            UIManager.Instance.UI_Initialize();
+        }
+        else
+        {
+            UI_MenuManager.Instance.UI_Start();
+            UI_MenuManager.Instance.UI_Initialize();
+        }
     }
 
     private void activatePlayer()
@@ -80,14 +89,21 @@ public class SystemManager : MonoBehaviour
 
         if (PlayerPrefs.HasKey("Master"))
         {
-            UIManager.Instance.LoadSoundSettings(new Vector3(PlayerPrefs.GetFloat("Master"), PlayerPrefs.GetFloat("BGM"), PlayerPrefs.GetFloat("SFX")));
+            if (!isMenu)
+            {
+                UIManager.Instance.LoadSoundSettings(new Vector3(PlayerPrefs.GetFloat("Master"), PlayerPrefs.GetFloat("BGM"), PlayerPrefs.GetFloat("SFX")));
+            }
+            else
+            {
+                UI_MenuManager.Instance.LoadSoundSettings(new Vector3(PlayerPrefs.GetFloat("Master"), PlayerPrefs.GetFloat("BGM"), PlayerPrefs.GetFloat("SFX")));
+            }
         }
     }
 
-    private void saveGameSettings()
+    public void saveGameSettings()
     {
         PlayerPrefs.SetInt("autoWave", GameManager.Instance.autoWaveStart ? 1 : 0);
-        Vector3 soundSettings = UIManager.Instance.GetSoundSettings();
+        Vector3 soundSettings = (!isMenu) ? UIManager.Instance.GetSoundSettings() : UI_MenuManager.Instance.GetSoundSettings();
         PlayerPrefs.SetFloat("Master", soundSettings.x);
         PlayerPrefs.SetFloat("BGM", soundSettings.y);
         PlayerPrefs.SetFloat("SFX", soundSettings.z);
@@ -97,6 +113,13 @@ public class SystemManager : MonoBehaviour
     {
         savePlayerProgress();
         saveGameSettings();
+    }
+
+    public void QuitGame()
+    {
+        savePlayerProgress();
+        saveGameSettings();
+        Application.Quit();
     }
 
 }

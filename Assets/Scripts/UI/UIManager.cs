@@ -163,6 +163,11 @@ public class UIManager : MonoBehaviour
         inGamePanel.SetSkillDisplay(spellType);
     }
 
+    public void SaveGameSettings()
+    {
+        SystemManager.Instance.saveGameSettings();
+    }
+
     public Vector3 GetSoundSettings()
     {
         return pausePanel.GetSoundSettings();
@@ -175,7 +180,7 @@ public class UIManager : MonoBehaviour
 
     public void QuitGame()
     {
-        GameManager.Instance.QuitGame();
+        SystemManager.Instance.QuitGame();
     }
 
 }

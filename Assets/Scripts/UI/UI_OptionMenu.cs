@@ -56,14 +56,20 @@ public class UI_OptionMenu : MonoBehaviour
 
     public void UI_Start()
     {
-        gameOptionButton.UI_Start();
+        if (!SystemManager.Instance.isMenu)
+        {
+            gameOptionButton.UI_Start();
+        }
         autoWaveButton.UI_Start();
     }
 
     public void UI_Initialize()
     {
-        gameOptionButton.isToggled = false;
-        gameOptionButton.SetToggleState(false);
+        if (!SystemManager.Instance.isMenu)
+        {
+            gameOptionButton.isToggled = false;
+            gameOptionButton.SetToggleState(false);
+        }
         autoWaveButton.SetToggleState(GameManager.Instance.autoWaveStart);
     }
 }
