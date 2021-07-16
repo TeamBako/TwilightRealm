@@ -17,8 +17,7 @@ public class GameManager : MonoBehaviour
     private float spawningRadius = 20;
     private PlayerControl player;
 
-    [SerializeField]
-    private bool gamePaused = false;
+    public bool gamePaused = false;
 
     [SerializeField]
     private bool waveStarted = false;
@@ -32,7 +31,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        Random.InitState((int) System.DateTime.Now.Ticks);
+        Random.InitState((int) System.DateTime.Now.Ticks);                          
     }
 
     // Start is called before the first frame update
@@ -114,7 +113,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!gamePaused && Input.GetKeyDown(KeyCode.BackQuote))
+        if (Input.GetKeyDown(KeyCode.BackQuote))
         { 
             UIManager.Instance.ToggleUpgradePanel();
         }
@@ -164,10 +163,16 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.SetWaveStatus(pGameData.waveNo);
     }
     #endregion
-    public void TogglePauseGame()
+
+    public void PauseGame()
     {
-        Time.timeScale = gamePaused ? 1 : 0;
-        gamePaused = !gamePaused;
+        Time.timeScale = 0;
+        gamePaused = true;
+    }
+    public void UnpauseGame()
+    {
+        Time.timeScale = 1;
+        gamePaused = false;
     }
 
 

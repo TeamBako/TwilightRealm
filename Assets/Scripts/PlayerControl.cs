@@ -204,7 +204,7 @@ public class PlayerControl : EntityStateControl
             regenTimer += Time.deltaTime;
         }
 
-        if (casting == false)
+        if (casting == false && !GameManager.Instance.gamePaused)
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
