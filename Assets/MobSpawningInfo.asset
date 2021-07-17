@@ -12,10 +12,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f54efdf0f7ff0dc45a744cd0ef6e1ef4, type: 3}
   m_Name: MobSpawningInfo
   m_EditorClassIdentifier: 
-  mobQuantity: 2
-  additonalMobPerSession: 1
-  mobWavePerSession: 1
+  mobQuantity: 5
+  additonalMobPerSession: 5
+  mobWavePerSession: 5
   allMonsterPrefab:
   - {fileID: 1980524105238717384, guid: d99ca9e355c25ba42b0c4ca12e79496f, type: 3}
   - {fileID: 7313005035877453014, guid: 7f9ead5fd9946764380fc18d4385daa6, type: 3}
   - {fileID: 636646794196431135, guid: 52673b77a3ddf2f41925757e5c6da56d, type: 3}
+  mobWaveInfos:
+  - waveNo: 1
+    monsterSpawnRatio:
+    - {x: 0, y: 100}
+  - waveNo: 2
+    monsterSpawnRatio:
+    - {x: 0, y: 80}
+    - {x: 1, y: 20}
+  - waveNo: 3
+    monsterSpawnRatio:
+    - {x: 0, y: 60}
+    - {x: 1, y: 40}
+  - waveNo: 4
+    monsterSpawnRatio:
+    - {x: 1, y: 100}
+  - waveNo: 5
+    monsterSpawnRatio:
+    - {x: 0, y: 70}
+    - {x: 2, y: 30}
