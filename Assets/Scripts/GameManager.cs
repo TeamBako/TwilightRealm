@@ -38,8 +38,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         player = PlayerControl.Instance;
-        gamePaused = false;
-        Time.timeScale = 1;
+        UnpauseGame();
     }
 
     public void activate(GameData data)
@@ -75,6 +74,8 @@ public class GameManager : MonoBehaviour
 
         currentWaveMobQuantity = mobQuantity;
 
+        MobSpawningInformation.MobWaveInfo curWaveInfo = mobSpawningInfo.GetMobWaveInfo(pGameData.waveNo);
+
         for (int i = 0; i < mobQuantity; i++)
         {
             Vector3 spawnPosition = new Vector3(0, 0, 0);
@@ -100,8 +101,34 @@ public class GameManager : MonoBehaviour
                                         : spawnLocationBounds.z
                                     : tempZLowerBound;
 
+            GameObject mobPrefab = null;
+            if (curWaveInfo == null)
+            {
+                mobPrefab = mobSpawningInfo.GetRandomMob();
+            }
+            else
+            {
+                int percent = 100;
+                for(int mon = 0; mon < curWaveInfo.monsterSpawnRatio.Length; mon++)
+                {
+                    float randomVal = Random.Range(0.0f, 1.0f);
 
-            GameObject mobPrefab = mobSpawningInfo.GetRandomMob();
+                    if (mon == curWaveInfo.monsterSpawnRatio.Length - 1)
+                    {
+                        mobPrefab = mobSpawningInfo.GetMob((int) curWaveInfo.monsterSpawnRatio[mon].x);
+                    }
+                    else if(randomVal <= curWaveInfo.monsterSpawnRatio[mon].y/percent)
+                    {
+                        mobPrefab = mobSpawningInfo.GetMob((int)curWaveInfo.monsterSpawnRatio[mon].x);
+                        break;
+                    }
+                    else
+                    {
+                        percent -= (int) curWaveInfo.monsterSpawnRatio[mon].y;
+                    }
+                }
+            }
+
             AIController spawnedMob = Instantiate(mobPrefab, spawnPosition, mobPrefab.transform.rotation).GetComponent<AIController>();
             spawnedMob.setup(pGameData.waveNo);
             spawnedmobList.Add(spawnedMob);
