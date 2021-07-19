@@ -49,7 +49,6 @@ public class PlayerControl : EntityStateControl
         pData = data;
         currentHP = getMaxHP();
         currentMP = getMaxMP();
-        speedMultiplier = getMovementSpeed();  
     }
 
     public void reset()
@@ -74,7 +73,7 @@ public class PlayerControl : EntityStateControl
         return baseMPRegen + mPRegenPerLevel * pData.mPRegen;
     }
 
-    protected float getMovementSpeed()
+    public override float getMovementSpeed()
     {
         return baseSpeed + speedPerLevel * pData.movementSpeed;
     }
@@ -118,7 +117,8 @@ public class PlayerControl : EntityStateControl
     protected override void handleStationary()
     {
         base.handleStationary();
-        transform.LookAt(getMousePositionInWorldSpace(transform.position.y));
+        Vector3 dir = (getMousePositionInWorldSpace(transform.position.y) - transform.position).normalized;
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 100 * Time.deltaTime);
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S)
             || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
         {
@@ -174,8 +174,9 @@ public class PlayerControl : EntityStateControl
         {
             horizontalDir += 1;
         }
-        Vector3 speed = new Vector3(horizontalDir, 0, verticalDir) * getMovementSpeed();
-        transform.LookAt(getMousePositionInWorldSpace(transform.position.y));
+        Vector3 speed = new Vector3(horizontalDir, 0, verticalDir) * getSpeed();
+        Vector3 dir = (getMousePositionInWorldSpace(transform.position.y) - transform.position).normalized;
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 100 * Time.deltaTime);
         if(speed == Vector3.zero)
         {
             enterMState(EntityMovementState.STATIONARY);

@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class AIController : EntityStateControl
 {
+
+    [SerializeField]
+    protected float baseSpeed;
+
     protected EntityStateControl target;
 
     [SerializeField]
@@ -28,6 +32,12 @@ public class AIController : EntityStateControl
     #endregion
 
     #region SetByProgression
+
+    public override float getMovementSpeed()
+    {
+        return baseSpeed;
+    }
+
     public override int getMaxHP()
     {
         return maxHP;
@@ -60,23 +70,56 @@ public class AIController : EntityStateControl
         setDamage(baseDamage + damagePerWave * waveNo);
     }
     #endregion
-
+    protected bool avoidance = false;
+    protected float avoidanceTimer = 0f;
     protected override void handleMovement()
     {
         base.handleMovement();
+        
         if (attacking == false)
         {
-            Vector3 dir = (target.transform.position - transform.position).normalized;
-            Vector3 speed = dir * speedMultiplier;
-            transform.LookAt(
-                new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
-            if (Vector3.Distance(target.transform.position, transform.position) <= range)
+            if (avoidance && avoidanceTimer < 0.5f)
+            {
+                rb.velocity = transform.forward * getSpeed();
+                avoidanceTimer += Time.deltaTime;
+                return;
+            } else
+            {
+                avoidance = false;
+                avoidanceTimer = 0f;
+            }
+
+            Vector3 tar = (target.transform.position - transform.position).normalized;
+            Vector3 dir = tar;
+            int layermask = 1 << 8;
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position + Vector3.up, transform.forward, out hit, 1.5f, layermask) ||
+                Physics.Raycast(transform.position + Vector3.up, Quaternion.Euler(0, 45, 0) * transform.forward, out hit, 1.5f, layermask)
+                || Physics.Raycast(transform.position + Vector3.up, Quaternion.Euler(0, -45, 0) * transform.forward, out hit, 1.5f, layermask))
+            {
+                dir = Vector3.Distance(transform.position + Quaternion.Euler(0, 90, 0) * transform.forward, hit.transform.position)
+                    < Vector3.Distance(transform.position + Quaternion.Euler(0, -90, 0) * transform.forward, hit.transform.position) 
+                    ? Quaternion.Euler(0, -90, 0) * transform.forward :
+                    Quaternion.Euler(0, 90, 0) * transform.forward;
+                avoidance = true;
+                transform.rotation = Quaternion.LookRotation(dir);
+                return;
+            }
+            //else if (Physics.Raycast(transform.position + transform.forward, Quaternion.Euler(0, -45, 0) * transform.forward, 1, layermask))
+            //{
+            //    dir = Quaternion.Euler(0, 90, 0) * transform.forward;
+            //    Debug.Log("hit2");
+            //}
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 5 * Time.deltaTime);
+            
+            if (Vector3.Distance(target.transform.position, transform.position) <= range 
+                && Mathf.Abs(Vector3.SignedAngle(tar, transform.forward, Vector3.up)) <= 45f)
             {
                 enterCState(EntityCombatState.COMBAT);
             }
             else
             {
-                rb.velocity = speed;
+                rb.velocity = dir * getSpeed();
             }
         }
     }
@@ -115,7 +158,9 @@ public class AIController : EntityStateControl
     protected override void handleCombat()
     {
         base.handleCombat();
-        if(Vector3.Distance(target.transform.position, transform.position) > range)
+        Vector3 tar = (target.transform.position - transform.position).normalized;
+        if (Vector3.Distance(target.transform.position, transform.position) > range
+            || Mathf.Abs(Vector3.SignedAngle(tar, transform.forward, Vector3.up)) > 45f)
         {
             enterCState(EntityCombatState.NOTATTACKING);
         }
