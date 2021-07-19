@@ -22,6 +22,21 @@ public class FireBall : SpellHandler
         return val > 1 ? 1 : val;
     }
 
+    protected float burnDuration
+    {
+        get
+        {
+            return baseBurnDuration + burnDurationPerLevel * refData.fireBallData.burnDuration;
+        }
+    }
+
+    protected int burnEffect
+    {
+        get
+        {
+            return baseBurnDamage + burnDamagePerLevel * refData.fireBallData.burnDamage;
+        }
+    }
     protected float castTime
     {
         get
@@ -34,8 +49,8 @@ public class FireBall : SpellHandler
     {
         get
         {
-            int curr = baseManaConsumption - manaConsumptionPerLevel * refData.fireBallData.manaConsumption;
-            return curr >= 0 ? curr : 0;
+            return Mathf.CeilToInt(baseManaConsumption * Mathf.Pow(manaConsumptionPerLevel,
+                refData.frostBreathData.manaConsumptionRate));
         }
     }
 
@@ -105,6 +120,15 @@ public class FireBall : SpellHandler
         }
     }
 
+    protected void OnTriggerStay(Collider other)
+    {
+        //StopAllCoroutines();
+        if (!isCasting && (other.gameObject.tag == "Monster" || other.gameObject.tag == "Terrain"))
+        {
+            explode();
+        }
+    }
+
     protected void explode()
     {
         StopAllCoroutines();
@@ -118,6 +142,12 @@ public class FireBall : SpellHandler
             if (c.tag == "Monster")
             {
                 c.GetComponent<AIController>().takeDamage(damage);
+                Burn b = c.GetComponent<Burn>();
+                if (!b)
+                {
+                    b = c.gameObject.AddComponent<Burn>();
+                }
+                b.activate(burnEffect, burnDuration);
             }
         }
         Destroy(ex.gameObject, 2f);
