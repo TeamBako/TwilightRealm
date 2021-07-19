@@ -294,7 +294,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 259040275}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Boundary
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -526,7 +526,7 @@ GameObject:
   - component: {fileID: 354693595}
   - component: {fileID: 354693594}
   - component: {fileID: 354693593}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: East Bound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1625,7 +1625,7 @@ GameObject:
   - component: {fileID: 979187724}
   - component: {fileID: 979187723}
   - component: {fileID: 979187722}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: South Bound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2347,7 +2347,7 @@ GameObject:
   - component: {fileID: 1289651760}
   - component: {fileID: 1289651759}
   - component: {fileID: 1289651758}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: West Bound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2525,7 +2525,7 @@ GameObject:
   - component: {fileID: 1385866808}
   - component: {fileID: 1385866807}
   - component: {fileID: 1385866806}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: North Bound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3929,7 +3929,7 @@ GameObject:
   - component: {fileID: 2119467599}
   m_Layer: 8
   m_Name: Forest
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
