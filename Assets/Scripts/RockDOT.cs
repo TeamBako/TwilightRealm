@@ -38,8 +38,8 @@ public class RockDOT : SpellHandler
     {
         get
         {
-            int curr = baseManaConsumption - manaConsumptionPerLevel * refData.rockDOTData.manaConsumption;
-            return curr >= 0 ? curr : 0;
+            return Mathf.CeilToInt(baseManaConsumption * Mathf.Pow(manaConsumptionPerLevel,
+                refData.frostBreathData.manaConsumptionRate));
         }
     }
 

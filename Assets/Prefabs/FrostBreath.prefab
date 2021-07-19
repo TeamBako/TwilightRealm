@@ -14343,14 +14343,14 @@ MonoBehaviour:
   baseManaConsumptionRate: 10
   baseAngle: 15
   baseRange: 5
-  baseSlowEffect: 0
-  baseSlowDuration: 0
+  baseSlowEffect: 0.9
+  baseSlowDuration: 3
   dpsPerLevel: 5
   manaConsumptionPerLevel: 1
   anglePerLevel: 2
   rangePerLevel: 2.5
-  slowEffectPerLevel: 0
-  slowDurationPerLevel: 0
+  slowEffectPerLevel: 0.9
+  slowDurationPerLevel: 1
 --- !u!1 &6936112889192908124
 GameObject:
   m_ObjectHideFlags: 0

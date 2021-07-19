@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class EntityStateControl : MonoBehaviour
 {
+    protected float speedMultiplier = 1f;
     protected enum EntityMovementState
     {
         STATIONARY,
@@ -16,9 +17,6 @@ public abstract class EntityStateControl : MonoBehaviour
         COMBAT,
         DEATH
     }
-
-    [SerializeField]
-    protected float speedMultiplier;
 
     protected EntityMovementState currentMState;
 
@@ -140,4 +138,14 @@ public abstract class EntityStateControl : MonoBehaviour
 
     public abstract void setMaxHP(int value);//Can be used by GameManagerProgression for AI
 
+    public abstract float getMovementSpeed();
+    public float getSpeed()
+    {
+        return speedMultiplier * getMovementSpeed();
+    }
+
+    public void setSpeedMultiplier(float val)
+    {
+        speedMultiplier = val;
+    }
 }

@@ -5,11 +5,6 @@ using UnityEngine;
 
 public class FrostBreath : SpellHandler
 {
-    #region DeterminedData
-    private float areaOfCone;
-    private float slowEffect;
-    private float slowDuration;
-    #endregion
 
     [SerializeField]
     private int baseDPS, baseManaConsumptionRate, baseAngle;
@@ -30,12 +25,26 @@ public class FrostBreath : SpellHandler
     {
         get
         {
-            int curr = baseManaConsumptionRate - manaConsumptionPerLevel 
-                * refData.frostBreathData.manaConsumptionRate;
-            return curr >= 0 ? curr : 0;
+            return Mathf.CeilToInt(baseManaConsumptionRate * Mathf.Pow(manaConsumptionPerLevel,
+                refData.frostBreathData.manaConsumptionRate));
         }
     }
 
+    protected float slowEffect
+    {
+        get
+        {
+            return baseSlowEffect * Mathf.Pow(slowEffectPerLevel, refData.frostBreathData.slowEffect);
+        }
+    }
+
+    protected float slowDuration
+    {
+        get
+        {
+            return baseSlowDuration + slowDurationPerLevel * refData.frostBreathData.slowDuration;
+        }
+    }
     protected int damagePerSecond
     {
         get
@@ -65,8 +74,6 @@ public class FrostBreath : SpellHandler
     {
         base.setup(_caster, data, cMana);
         ParticleSystem[] ps = GetComponentsInChildren<ParticleSystem>();
-        Debug.Log(width);
-        Debug.Log(range / baseRange);
         foreach (ParticleSystem s in ps)
         {
             ParticleSystem.MainModule mm = s.main;
@@ -118,6 +125,12 @@ public class FrostBreath : SpellHandler
                     {
                         damaged.Add(con);
                         con.takeDamage(Mathf.CeilToInt(damagePerSecond * tickRate));
+                        Slow eff = con.gameObject.GetComponent<Slow>();
+                        if(!eff)
+                        {
+                            eff = con.gameObject.AddComponent<Slow>();
+                        }
+                        eff.activate(slowEffect, slowDuration);
                     }
                 }
             }
