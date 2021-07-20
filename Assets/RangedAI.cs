@@ -24,6 +24,7 @@ public class RangedAI : AIController
         {
             Destroy(currentBallFire.gameObject);
         }
+        anim.SetFloat("AttackSpeed", 0.25f);
         attacking = true;
         currentBallFire = Instantiate(ballFirePrefab, firingPoint.transform.position,
             firingPoint.transform.rotation).GetComponent<BallFire>();
@@ -34,6 +35,7 @@ public class RangedAI : AIController
     public override void attackEvent()
     {
         currentBallFire.fire(target.transform.position);
+        anim.SetFloat("AttackSpeed", 1);
         currentBallFire.transform.parent = null;
         currentBallFire = null;
     }
