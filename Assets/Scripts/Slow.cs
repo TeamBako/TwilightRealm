@@ -10,7 +10,7 @@ public class Slow : MonoBehaviour
     protected float value, duration;
     public void activate(float val, float dur)
     {
-        target = GetComponent<EntityStateControl>();
+        target = GetComponentInParent<EntityStateControl>();
         this.value = val;
         this.duration = dur;
     }
@@ -20,7 +20,7 @@ public class Slow : MonoBehaviour
         if(duration <= 0)
         {
             target.setSpeedMultiplier(1);
-            Destroy(this);
+            Destroy(gameObject, 0.1f);
             return;
         }
         duration -= Time.deltaTime;

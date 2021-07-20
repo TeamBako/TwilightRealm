@@ -21,6 +21,10 @@ public class FrostBreath : SpellHandler
     protected float tickTimer = 0;
 
     protected float tickRate = 0.5f;
+
+    [SerializeField]
+    protected GameObject slowPrefab;
+
     protected int manaConsumption
     {
         get
@@ -125,10 +129,11 @@ public class FrostBreath : SpellHandler
                     {
                         damaged.Add(con);
                         con.takeDamage(Mathf.CeilToInt(damagePerSecond * tickRate));
-                        Slow eff = con.gameObject.GetComponent<Slow>();
+                        Slow eff = con.gameObject.GetComponentInChildren<Slow>();
                         if(!eff)
                         {
-                            eff = con.gameObject.AddComponent<Slow>();
+                            eff = Instantiate(slowPrefab, con.transform.position, con.transform.rotation).GetComponent<Slow>();
+                            eff.transform.parent = con.transform;
                         }
                         eff.activate(slowEffect, slowDuration);
                     }

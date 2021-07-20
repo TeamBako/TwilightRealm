@@ -16,6 +16,9 @@ public class FireBall : SpellHandler
     private float aoePerLevel, burnDurationPerLevel, castTimeMultiplierPerLevel;
     #endregion
 
+    [SerializeField]
+    protected GameObject burnPrefab;
+
     public override float percentageCompletion()
     {
         float val = castTimer / castTime;
@@ -142,10 +145,11 @@ public class FireBall : SpellHandler
             if (c.tag == "Monster")
             {
                 c.GetComponent<AIController>().takeDamage(damage);
-                Burn b = c.GetComponent<Burn>();
+                Burn b = c.GetComponentInChildren<Burn>();
                 if (!b)
                 {
-                    b = c.gameObject.AddComponent<Burn>();
+                    b = Instantiate(burnPrefab, c.transform.position, c.transform.rotation).GetComponent<Burn>();
+                    b.gameObject.transform.parent = c.transform;
                 }
                 b.activate(burnEffect, burnDuration);
             }

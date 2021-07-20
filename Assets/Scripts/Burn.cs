@@ -11,7 +11,7 @@ public class Burn : MonoBehaviour
     protected float tickTimer = 0f;
     public virtual void activate(int burnDam, float dur)
     {
-        target = GetComponent<EntityStateControl>();
+        target = GetComponentInParent<EntityStateControl>();
         burnDamage = burnDam;
         duration = dur;
     }
@@ -21,7 +21,7 @@ public class Burn : MonoBehaviour
     {
         if(duration <= 0)
         {
-            Destroy(this);
+            Destroy(gameObject, 0.1f);
             return;
         }
 
