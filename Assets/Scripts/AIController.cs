@@ -158,16 +158,21 @@ public class AIController : EntityStateControl
     protected override void handleCombat()
     {
         base.handleCombat();
+        if (attacking)
+        {
+            return;
+        }
         Vector3 tar = (target.transform.position - transform.position).normalized;
         if (Vector3.Distance(target.transform.position, transform.position) > range
             || Mathf.Abs(Vector3.SignedAngle(tar, transform.forward, Vector3.up)) > 45f)
         {
             enterCState(EntityCombatState.NOTATTACKING);
         }
-        else if(!attacking)
+        else 
         {
+            Debug.Log("start");
             attacking = true;
-            anim.SetBool("Attack", true);
+            anim.SetBool("Attack", true);        
         }
     }
 
@@ -193,5 +198,6 @@ public class AIController : EntityStateControl
     {
         attacking = false;
         anim.SetBool("Attack", false);
+        Debug.Log("end");
     }
 }
