@@ -11,9 +11,9 @@ public class FireBall : SpellHandler
     private float baseAOE, baseBurnDuration, baseCastTime;
 
     [SerializeField]
-    private int damagePerLevel, manaConsumptionPerLevel, burnDamagePerLevel;
+    private int damagePerLevel, burnDamagePerLevel;
     [SerializeField]
-    private float aoePerLevel, burnDurationPerLevel, castTimeMultiplierPerLevel;
+    private float aoePerLevel, burnDurationPerLevel, castTimeMultiplierPerLevel, manaConsumptionPerLevel;
     #endregion
 
     [SerializeField]
@@ -53,7 +53,7 @@ public class FireBall : SpellHandler
         get
         {
             return Mathf.CeilToInt(baseManaConsumption * Mathf.Pow(manaConsumptionPerLevel,
-                refData.frostBreathData.manaConsumptionRate));
+                refData.fireBallData.manaConsumption));
         }
     }
 

@@ -9687,11 +9687,11 @@ MonoBehaviour:
   baseBurnDuration: 3
   baseCastTime: 3
   damagePerLevel: 10
-  manaConsumptionPerLevel: 5
   burnDamagePerLevel: 1
   aoePerLevel: 0.1
   burnDurationPerLevel: 1
   castTimeMultiplierPerLevel: 0.9
+  manaConsumptionPerLevel: 0.9
   burnPrefab: {fileID: 6317101761850649178, guid: 6ac413dee586c5d429e354dc7cced0ec, type: 3}
   speedMultiplier: 0.2
   explosion: {fileID: 6171448068020102397, guid: 3397246df9cca3048bd74c41ec9374d5, type: 3}

@@ -14346,11 +14346,11 @@ MonoBehaviour:
   baseSlowEffect: 0.9
   baseSlowDuration: 3
   dpsPerLevel: 5
-  manaConsumptionPerLevel: 1
   anglePerLevel: 2
   rangePerLevel: 2.5
   slowEffectPerLevel: 0.9
   slowDurationPerLevel: 1
+  manaConsumptionPerLevel: 0.9
   slowPrefab: {fileID: 4955848045811527222, guid: f3964eba8bea9db4881b43a2665efb0f, type: 3}
 --- !u!1 &6936112889192908124
 GameObject:

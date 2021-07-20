@@ -13,10 +13,10 @@ public class FrostBreath : SpellHandler
     private float baseRange, baseSlowEffect, baseSlowDuration;
 
     [SerializeField]
-    private int dpsPerLevel, manaConsumptionPerLevel, anglePerLevel;
+    private int dpsPerLevel, anglePerLevel;
 
     [SerializeField]
-    private float rangePerLevel, slowEffectPerLevel, slowDurationPerLevel;
+    private float rangePerLevel, slowEffectPerLevel, slowDurationPerLevel, manaConsumptionPerLevel;
 
     protected float tickTimer = 0;
 
