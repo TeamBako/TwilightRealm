@@ -12,9 +12,9 @@ public class RockDOT : SpellHandler
     private float baseAOE, baseDuration, baseCastTime;
 
     [SerializeField]
-    private int dotPerLevel, manaConsumptionPerLevel;
+    private int dotPerLevel;
     [SerializeField]
-    private float aoePerLevel, durationPerLevel, castTimeMultiplierPerLevel;
+    private float aoePerLevel, durationPerLevel, castTimeMultiplierPerLevel, manaConsumptionPerLevel;
     #endregion
 
     [SerializeField]
@@ -39,7 +39,7 @@ public class RockDOT : SpellHandler
         get
         {
             return Mathf.CeilToInt(baseManaConsumption * Mathf.Pow(manaConsumptionPerLevel,
-                refData.frostBreathData.manaConsumptionRate));
+                refData.rockDOTData.manaConsumption));
         }
     }
 
