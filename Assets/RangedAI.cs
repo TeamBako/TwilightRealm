@@ -29,7 +29,7 @@ public class RangedAI : AIController
         currentBallFire = Instantiate(ballFirePrefab, firingPoint.transform.position,
             firingPoint.transform.rotation).GetComponent<BallFire>();
         currentBallFire.transform.parent = firingPoint.transform;
-        currentBallFire.activate(damage, 1);
+        currentBallFire.activate(damage, 0.25f);
     }
     // Start is called before the first frame update
     public override void attackEvent()
