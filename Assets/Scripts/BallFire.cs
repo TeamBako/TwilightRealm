@@ -68,8 +68,13 @@ public class BallFire : MonoBehaviour
         }
     }
 
+    protected bool exploded = false;
+
     protected void explode()
     {
+        if (exploded)
+            return;
+        exploded = true;
         StopAllCoroutines();
         GameObject ex = Instantiate(explosion, transform.position, Quaternion.identity);
         ex.transform.localScale = new Vector3(areaOfEffect, areaOfEffect, areaOfEffect);

@@ -28,7 +28,7 @@ public class AIController : EntityStateControl
     #endregion
 
     #region CombatValues
-    protected int currentHP, maxHP, damage;
+    protected int currentHP = 100, maxHP, damage;
     #endregion
 
     #region SetByProgression
@@ -63,7 +63,7 @@ public class AIController : EntityStateControl
         damage = dmg;
     }
 
-    public void setup(int waveNo)
+    public virtual void setup(int waveNo)
     {
         setCurrentHP(baseHP + hpPerWave * waveNo);
         setMaxHP(baseHP + hpPerWave * waveNo);
