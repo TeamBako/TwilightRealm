@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
         {
             foreach(AIController mob in spawnedmobList)
             {
-                Destroy(mob.gameObject);
+                Destroy(mob.gameObject, 5f);
             }
 
             spawnedmobList = new List<AIController>();

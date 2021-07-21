@@ -133,7 +133,8 @@ public class PlayerControl : EntityStateControl
         StopAllCoroutines();
         if (castedSpell)
         {
-            Destroy(castedSpell.gameObject);
+            castedSpell.gameObject.SetActive(false);
+            Destroy(castedSpell.gameObject, 10f);
         }
         anim.SetBool("Death", true);
         UIManager.Instance.DisplayPlayerDead();
@@ -237,7 +238,8 @@ public class PlayerControl : EntityStateControl
                     StartCoroutine(castSpell(spell));
                 } else
                 {
-                    Destroy(spell.gameObject);
+                    spell.gameObject.SetActive(false);
+                    Destroy(spell.gameObject, 10f);
                 }
             }
         }

@@ -21,7 +21,8 @@ public class Burn : MonoBehaviour
     {
         if(duration <= 0)
         {
-            Destroy(gameObject, 0.1f);
+            gameObject.SetActive(false);
+            Destroy(gameObject, 10f);
             return;
         }
 

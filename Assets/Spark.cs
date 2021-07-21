@@ -20,7 +20,7 @@ public class Spark : BossSpell
                 transform.rotation).GetComponent<SparkProjectile>();
             instance.setup(refPoint, damage, baseSpeed + speedPerLevel * level, baseDuration + durationPerLevel * level);
         }
-
-        Destroy(gameObject, 0.1f);
+        gameObject.SetActive(false);
+        Destroy(gameObject, 10f);
     }
 }

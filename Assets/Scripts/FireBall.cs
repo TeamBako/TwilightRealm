@@ -159,6 +159,7 @@ public class FireBall : SpellHandler
             }
         }
         Destroy(ex.gameObject, 2f);
-        Destroy(gameObject, 0.01f);
+        gameObject.SetActive(false);
+        Destroy(gameObject, 10f);
     }
 }

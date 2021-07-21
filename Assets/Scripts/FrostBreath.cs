@@ -191,7 +191,8 @@ public class FrostBreath : SpellHandler
             ParticleSystem.EmissionModule em = s.emission;
             em.enabled = false;
         }
-        Destroy(gameObject, 0.5f);
+        gameObject.SetActive(false);
+        Destroy(gameObject, 10f);
     }
 
     

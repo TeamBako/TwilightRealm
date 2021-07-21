@@ -31,7 +31,8 @@ public abstract class SpellHandler : MonoBehaviour
     public abstract float percentageCompletion();
     public virtual void onDisruptedCast(Vector3 referencePoint) 
     {
-        Destroy(gameObject, 0.01f);
+        gameObject.SetActive(false);
+        Destroy(gameObject, 10f);
     }
 
     public virtual void setup(Transform _caster, PlayerData data, System.Action<int> cMana)

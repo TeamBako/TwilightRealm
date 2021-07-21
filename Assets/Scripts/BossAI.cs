@@ -34,7 +34,8 @@ public class BossAI : AIController
     {
         if (currentSpell)
         {
-            Destroy(currentSpell.gameObject);
+            Destroy(currentSpell.gameObject, 10f);
+            currentSpell.gameObject.SetActive(false);
         }
         attacking = true;
         int index = Random.Range(0, spells.Count - 1);
@@ -70,7 +71,8 @@ public class BossAI : AIController
         base.enterDeath();
         if (currentSpell)
         {
-            Destroy(currentSpell.gameObject);
+            currentSpell.gameObject.SetActive(false);
+            Destroy(currentSpell.gameObject, 10f);
         }
     }
 }

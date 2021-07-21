@@ -49,7 +49,8 @@ public class SparkProjectile : MonoBehaviour
         if(timer >= duration)
         {
             destroyed = true;
-            Destroy(gameObject, 0.1f);
+            gameObject.SetActive(false);
+            Destroy(gameObject, 10f);
             return;
         }
 

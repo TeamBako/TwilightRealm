@@ -9687,7 +9687,7 @@ MonoBehaviour:
   baseBurnDuration: 3
   baseCastTime: 3
   damagePerLevel: 10
-  burnDamagePerLevel: 1
+  burnDamagePerLevel: 3
   aoePerLevel: 0.1
   burnDurationPerLevel: 1
   castTimeMultiplierPerLevel: 0.9

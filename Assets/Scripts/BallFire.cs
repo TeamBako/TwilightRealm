@@ -88,7 +88,8 @@ public class BallFire : MonoBehaviour
             }
         }
         Destroy(ex.gameObject, 2f);
-        Destroy(gameObject, 0.01f);
+        Destroy(gameObject, 10f);
+        gameObject.SetActive(false);
     }
     public void OnDestroy()
     {

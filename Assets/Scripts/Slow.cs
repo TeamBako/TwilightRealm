@@ -20,7 +20,8 @@ public class Slow : MonoBehaviour
         if(duration <= 0)
         {
             target.setSpeedMultiplier(1);
-            Destroy(gameObject, 0.1f);
+            gameObject.SetActive(false);
+            Destroy(gameObject, 10f);
             return;
         }
         duration -= Time.deltaTime;

@@ -85,7 +85,8 @@ public class RockDOT : SpellHandler
     public override void onDisruptedCast(Vector3 referencePoint)
     {
         base.onDisruptedCast(referencePoint);
-        Destroy(gameObject, 0.01f);
+        gameObject.SetActive(false);
+        Destroy(gameObject, 10f);
     }
 
     public override void onFullCast(Vector3 referencePoint)
@@ -94,7 +95,8 @@ public class RockDOT : SpellHandler
         RockAOE aoe = Instantiate(rockAOE, 
             PlayerControl.Instance.transform.position + Vector3.up * 0.1f, rockAOE.transform.rotation);
         aoe.setup(damagePerSecond, areaOfEffect, duration);
-        Destroy(gameObject, 0.01f);
+        gameObject.SetActive(false);
+        Destroy(gameObject, 10f);
         consumeMana(manaConsumption);
     }
 }

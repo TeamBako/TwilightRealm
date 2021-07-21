@@ -22,18 +22,20 @@ public class RangedAI : AIController
     {
         if (currentBallFire)
         {
-            Destroy(currentBallFire.gameObject);
+            Destroy(currentBallFire.gameObject, 10f);
+            gameObject.SetActive(false);
         }
         anim.SetFloat("AttackSpeed", 0.25f);
         attacking = true;
         currentBallFire = Instantiate(ballFirePrefab, firingPoint.transform.position,
             firingPoint.transform.rotation).GetComponent<BallFire>();
         currentBallFire.transform.parent = firingPoint.transform;
-        currentBallFire.activate(damage, 0.25f);
+        currentBallFire.activate(damage, 0.5f);
     }
     // Start is called before the first frame update
     public override void attackEvent()
     {
+        
         currentBallFire.fire(target.transform.position);
         anim.SetFloat("AttackSpeed", 1);
         currentBallFire.transform.parent = null;
@@ -45,7 +47,8 @@ public class RangedAI : AIController
         base.enterDeath();
         if(currentBallFire)
         {
-            Destroy(currentBallFire.gameObject);
+            Destroy(currentBallFire.gameObject, 10f);
+            currentBallFire.gameObject.SetActive(false);
         }
     }
 }
