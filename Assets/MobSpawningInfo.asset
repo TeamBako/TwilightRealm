@@ -19,6 +19,7 @@ MonoBehaviour:
   - {fileID: 1980524105238717384, guid: d99ca9e355c25ba42b0c4ca12e79496f, type: 3}
   - {fileID: 7313005035877453014, guid: 7f9ead5fd9946764380fc18d4385daa6, type: 3}
   - {fileID: 636646794196431135, guid: 52673b77a3ddf2f41925757e5c6da56d, type: 3}
+  - {fileID: 7641668433964553308, guid: 7eb4736dc37b6be43ac2e9a0d48b8011, type: 3}
   mobWaveInfos:
   - waveNo: 1
     monsterSpawnRatio:
@@ -38,3 +39,25 @@ MonoBehaviour:
     monsterSpawnRatio:
     - {x: 0, y: 70}
     - {x: 2, y: 30}
+  - waveNo: 6
+    monsterSpawnRatio:
+    - {x: 0, y: 70}
+    - {x: 3, y: 30}
+  - waveNo: 7
+    monsterSpawnRatio:
+    - {x: 0, y: 60}
+    - {x: 2, y: 10}
+    - {x: 3, y: 30}
+  - waveNo: 8
+    monsterSpawnRatio:
+    - {x: 0, y: 50}
+    - {x: 3, y: 50}
+  - waveNo: 9
+    monsterSpawnRatio:
+    - {x: 0, y: 30}
+    - {x: 1, y: 20}
+    - {x: 2, y: 10}
+    - {x: 3, y: 40}
+  - waveNo: 10
+    monsterSpawnRatio:
+    - {x: 3, y: 100}
