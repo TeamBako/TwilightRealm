@@ -22078,6 +22078,7 @@ MonoBehaviour:
   gamePaused: 0
   waveStarted: 0
   autoWaveStart: 0
+  isGameOver: 0
   spawnedmobList: []
 --- !u!1 &1807155236
 GameObject:
