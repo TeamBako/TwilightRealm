@@ -9,6 +9,7 @@ public class UI_MenuManager : MonoBehaviour
 
     public UI_MainPanel mainPanel;
     public UI_PauseMenuPanel pausePanel;
+    public UI_HighscorePanel highscorePanel;
 
 
     [SerializeField]
@@ -22,6 +23,7 @@ public class UI_MenuManager : MonoBehaviour
 
         mainPanel.UI_Awake();
         pausePanel.UI_Awake();
+        highscorePanel.UI_Awake();
     }
 
 
@@ -29,12 +31,14 @@ public class UI_MenuManager : MonoBehaviour
     {
         mainPanel.UI_Start();
         pausePanel.UI_Start();
+        highscorePanel.UI_Start();
     }
 
     public void UI_Initialize()
     {
         mainPanel.UI_Initialize();
         pausePanel.UI_Initialize();
+        highscorePanel.UI_Initialize();
 
         SetCurrentPanel(mainPanel);
     }

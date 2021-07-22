@@ -9,6 +9,7 @@ public class SystemManager : MonoBehaviour
 
     private string playerFileName = "PlayerInfo";
     private string gameFileName = "GameInfo";
+    private string highscoreFileName = "HSInfo";
 
     public bool isMenu;
 
@@ -22,6 +23,7 @@ public class SystemManager : MonoBehaviour
     {
         activatePlayer();
         activateGame();
+        activateHS();
         loadGameSettings();
         if (!isMenu)
         {
@@ -46,6 +48,19 @@ public class SystemManager : MonoBehaviour
         }
 
         PlayerControl.Instance.activate(pd);
+    }
+
+    private void activateHS()
+    {
+        HighscoreData hsData = new HighscoreData();
+        object o = SerializeManager.Load(highscoreFileName);
+
+        if (o != null)
+        {
+            hsData = (HighscoreData)o;
+        }
+
+        GameManager.Instance.HS_Activate(hsData);
     }
 
     private void activateGame()
@@ -78,6 +93,7 @@ public class SystemManager : MonoBehaviour
     {
         SerializeManager.Save(playerFileName, PlayerControl.Instance.deactivate());
         SerializeManager.Save(gameFileName, GameManager.Instance.deactivate());
+        SerializeManager.Save(highscoreFileName, GameManager.Instance.HS_Deactivate());
     }
 
     private void loadGameSettings()

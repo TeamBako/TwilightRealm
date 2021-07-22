@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public Vector3 spawnLocationBounds;
 
     private GameData pGameData;
+    private HighscoreData pHSData;
 
     [SerializeField]
     private MobSpawningInformation mobSpawningInfo;
@@ -39,6 +40,16 @@ public class GameManager : MonoBehaviour
     {
         player = PlayerControl.Instance;
         UnpauseGame();
+    }
+
+    public void HS_Activate(HighscoreData hsData)
+    {
+        pHSData = hsData;
+    }
+
+    public HighscoreData HS_Deactivate()
+    {
+        return pHSData;
     }
 
     public void activate(GameData data)
