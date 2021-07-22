@@ -269,12 +269,13 @@ MonoBehaviour:
   baseSpeed: 3
   range: 10
   baseDamage: 25
-  damagePerWave: 10
+  damagePerWave: 25
   baseHP: 200
   hpPerWave: 50
-  waveRef: 0
+  levelRef: 0
   spells:
   - {fileID: 777504604738215537, guid: 40f5980dfed20584b967598af2a56665, type: 3}
+  - {fileID: 5866981963283633635, guid: 55c54d3242d33b44e8fbfa7946a74394, type: 3}
   firingPoint: {fileID: 3653340162360801302}
   cooldown: 3
 --- !u!1 &2846287603903747834
