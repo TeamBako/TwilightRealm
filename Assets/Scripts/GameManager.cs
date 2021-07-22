@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     private int currentWaveMobQuantity = 0;
 
     public bool autoWaveStart = false;
+    public bool isGameOver = false;
 
     [SerializeField]
     private List<AIController> spawnedmobList = new List<AIController>();
@@ -52,10 +53,19 @@ public class GameManager : MonoBehaviour
         return pHSData;
     }
 
+    public void SaveHS(string inputName)
+    {
+        isGameOver = true;
+        pHSData.AddHighscore(new Highscore_Info(inputName, pGameData.waveNo));
+
+        SystemManager.Instance.savePlayerProgress();
+        SystemManager.Instance.ResetPlayerData();
+    }
+
     public void activate(GameData data)
     {
         pGameData = data;
-        if (!SystemManager.Instance.isMenu)
+        if (!SystemManager.Instance.isMenu && !isGameOver)
         {
             UIManager.Instance.SetWaveStatus(pGameData.waveNo);
         }

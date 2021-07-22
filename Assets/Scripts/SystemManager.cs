@@ -89,7 +89,7 @@ public class SystemManager : MonoBehaviour
         GameManager.Instance.activate(new GameData());
     }
 
-    private void savePlayerProgress()
+    public void savePlayerProgress()
     {
         SerializeManager.Save(playerFileName, PlayerControl.Instance.deactivate());
         SerializeManager.Save(gameFileName, GameManager.Instance.deactivate());

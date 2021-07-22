@@ -21,19 +21,11 @@ public class Highscore_Info
     public string name;
     public int wave_no;
 
-    public int CompareOther(Highscore_Info other)
+    public Highscore_Info(string name, int wave_no)
     {
-        if(other.wave_no > this.wave_no)
-        {
-            return 1;
-        }
-        else if(other.wave_no < this.wave_no)
-        {
-            return -1;
-        }
-        else
-        {
-            return 0;
-        }
+        this.name = name;
+        this.wave_no = wave_no;
     }
+
+
 }
