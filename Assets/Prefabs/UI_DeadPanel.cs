@@ -28,6 +28,6 @@ public class UI_DeadPanel : UI_Panel
         saveArea.SetActive(false);
         buttonArea.SetActive(true);
 
-        GameManager.Instance.SaveHS(inputName.text);
+        GameManager.Instance.SaveHS(inputName.text == "" || inputName.text == "Input Name..." ? "Player" : inputName.text);
     }
 }
