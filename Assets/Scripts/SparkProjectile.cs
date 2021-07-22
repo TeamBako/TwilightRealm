@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SparkProjectile : MonoBehaviour
 {
+    protected float tickTimer = 0.5f;
+
     protected Vector3 refPoint, dir;
 
     protected int damage;
@@ -74,9 +76,9 @@ public class SparkProjectile : MonoBehaviour
             dir = new Vector3(x, 0, z).normalized;
         } 
 
-        if(other.tag == "Player" && damageTimer > 0.5f)
+        if(other.tag == "Player" && damageTimer > tickTimer)
         {
-            other.GetComponent<EntityStateControl>().takeDamage(damage);
+            other.GetComponent<EntityStateControl>().takeDamage((int)(damage * tickTimer));
             damageTimer = 0f;
         }
     }
@@ -90,9 +92,9 @@ public class SparkProjectile : MonoBehaviour
             dir = new Vector3(x, 0, z).normalized;
         }
 
-        if (other.tag == "Player" && damageTimer > 0.5f)
+        if (other.tag == "Player" && damageTimer > tickTimer)
         {
-            other.GetComponent<EntityStateControl>().takeDamage(damage);
+            other.GetComponent<EntityStateControl>().takeDamage((int)(damage * tickTimer));
             damageTimer = 0f;
             Debug.Log("damaged");
         }
