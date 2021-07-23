@@ -80,6 +80,7 @@ public class SparkProjectile : MonoBehaviour
         {
             other.GetComponent<EntityStateControl>().takeDamage((int)(damage * tickTimer));
             damageTimer = 0f;
+            Debug.Log((damage * tickTimer));
         }
     }
 
@@ -96,7 +97,7 @@ public class SparkProjectile : MonoBehaviour
         {
             other.GetComponent<EntityStateControl>().takeDamage((int)(damage * tickTimer));
             damageTimer = 0f;
-            Debug.Log("damaged");
+            Debug.Log((damage * tickTimer));
         }
     }
 

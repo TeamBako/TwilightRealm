@@ -9,18 +9,27 @@ public class CursedGround : MonoBehaviour
     protected int damage;
 
     protected float tickTimer = 0.5f;
+
+    protected bool started = false;
     public void setup(int dmg, float dur)
     {
         damage = dmg;
         duration = dur;
         damageTimer = 0.5f;
         timer = 0;
-        
+        StartCoroutine(DelayActivation(1f));
     }
 
+    protected IEnumerator DelayActivation(float seconds)
+    {
+        yield return new WaitForSecondsRealtime(seconds);
+        started = true;
+    }
     protected void Update()
     {
-        Debug.Log(timer);
+        if (!started)
+            return;
+
         if (timer >= duration)
         {
             gameObject.SetActive(false);
@@ -36,6 +45,7 @@ public class CursedGround : MonoBehaviour
                 if(col.tag == "Player")
                 {
                     col.GetComponent<EntityStateControl>().takeDamage((int)(damage * tickTimer));
+                    Debug.Log(damage * tickTimer);
                 }
             }
             damageTimer = 0;

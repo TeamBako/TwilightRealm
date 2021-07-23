@@ -199,6 +199,7 @@ public class PlayerControl : EntityStateControl
         {
             currentHP = getHPRegen() + currentHP > getMaxHP() ? getMaxHP() : getHPRegen() + currentHP;
             currentMP = getMPRegen() + currentMP > getMaxMP() ? getMaxMP() : getMPRegen() + currentMP;
+            Debug.Log(getMPRegen());
             regenTimer = 0;
         }
         else

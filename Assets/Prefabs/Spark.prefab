@@ -4848,10 +4848,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95872851b8c25304a870569b62a65837, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseProjectile: 3
-  projectilePerLevel: 1
+  baseProjectile: 5
+  projectilePerLevel: 3
   projPrefab: {fileID: 2618511749128459259, guid: ed56ab13ed2041e499053bee28e960e1, type: 3}
-  baseDuration: 8
+  baseDuration: 10
   durationPerLevel: 2
   baseSpeed: 5
   speedPerLevel: 1

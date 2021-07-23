@@ -39,7 +39,6 @@ public class BossAI : AIController
         }
         attacking = true;
         float ran = Random.Range(0, spells.Count);
-        Debug.Log(ran);
         int index = Mathf.RoundToInt(ran);
         currentSpell = Instantiate(spells[index], firingPoint.transform.position,
             firingPoint.transform.rotation).GetComponent<BossSpell>();

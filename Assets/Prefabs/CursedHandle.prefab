@@ -9628,8 +9628,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfc898b9e03fa254f978bd968c818e8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  safeRadius: 1.5
-  maxRadius: 5
+  safeRadius: 3
+  maxRadius: 6
   baseProjectile: 5
   projectilePerLevel: 2
   projPrefab: {fileID: 6739713172047824402, guid: c640882d056f4fb459db57ba7f441a25, type: 3}
