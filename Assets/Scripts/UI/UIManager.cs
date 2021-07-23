@@ -126,7 +126,7 @@ public class UIManager : MonoBehaviour
 
     public void ToggleUpgradePanel()
     {
-        if (currentPanel != pausePanel)
+        if (currentPanel != pausePanel && currentPanel != deadPanel)
         {
             if (currentPanel == inGamePanel)
             {
@@ -144,20 +144,24 @@ public class UIManager : MonoBehaviour
 
     public void ToggleEscapePanel()
     {
-        if (currentPanel != pausePanel)
+        if(currentPanel != deadPanel)
         {
-            //upgradePanel.UpdateAllInfo();
-            SetCurrentPanel(pausePanel);
-            GameManager.Instance.PauseGame();
-        }
-        else
-        {
-            if (previousPanel != upgradePanel)
-            {
-                GameManager.Instance.UnpauseGame();
-            }
 
-            SetCurrentPanel(previousPanel);
+            if (currentPanel != pausePanel)
+            {
+                //upgradePanel.UpdateAllInfo();
+                SetCurrentPanel(pausePanel);
+                GameManager.Instance.PauseGame();
+            }
+            else
+            {
+                if (previousPanel != upgradePanel)
+                {
+                    GameManager.Instance.UnpauseGame();
+                }
+
+                SetCurrentPanel(previousPanel);
+            }
         }
     }
 

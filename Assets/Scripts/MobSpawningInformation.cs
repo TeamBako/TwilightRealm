@@ -9,9 +9,23 @@ public class MobSpawningInformation : ScriptableObject
     public int additonalMobPerSession;
     public int mobWavePerSession;
 
+    public int wavePerBoss;
+
     public GameObject[] allMonsterPrefab;
 
+    public GameObject bossPrefab;
+
     public List<MobWaveInfo> mobWaveInfos;
+
+    public bool CheckBossSpawn(int curWave)
+    {
+        return curWave % wavePerBoss == 0;
+    }
+
+    public GameObject GetBoss()
+    {
+        return bossPrefab;
+    }
 
     public int GetNoOfMobToSpawn(int wave)
     {

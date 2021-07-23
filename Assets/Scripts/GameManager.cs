@@ -75,7 +75,36 @@ public class GameManager : MonoBehaviour
     {
         return pGameData;
     }
+    
+    public Vector3 CalculatePosSpawn()
+    {
+        Vector3 playerPostion = player.GetComponent<Transform>().position;
 
+        Vector3 spawnPosition = new Vector3(0, 0, 0);
+
+        // x coord
+        spawnPosition.x = Random.Range((playerPostion.x + spawningRadius), spawnLocationBounds.x); // upper bound;
+        float tempXLowerBound = Random.Range((playerPostion.x - spawningRadius), -spawnLocationBounds.x); // lower bound;
+        spawnPosition.x = (spawnPosition.x <= spawnLocationBounds.x)
+                                ? (tempXLowerBound >= -spawnLocationBounds.x)
+                                    ? (Random.Range(0.0f, 1.0f) >= 0.5f)
+                                        ? spawnPosition.x
+                                        : tempXLowerBound
+                                    : spawnLocationBounds.x
+                                : tempXLowerBound;
+        // z coord
+        spawnPosition.z = Random.Range((playerPostion.z + spawningRadius), spawnLocationBounds.z); // upper bound;
+        float tempZLowerBound = Random.Range((playerPostion.z - spawningRadius), -spawnLocationBounds.z); // lower bound;
+        spawnPosition.z = (spawnPosition.z <= spawnLocationBounds.z)
+                                ? (tempZLowerBound >= -spawnLocationBounds.z)
+                                    ? (Random.Range(0.0f, 1.0f) >= 0.5f)
+                                        ? spawnPosition.z
+                                        : tempZLowerBound
+                                    : spawnLocationBounds.z
+                                : tempZLowerBound;
+
+        return spawnPosition;
+    }
 
     public void StartWave()
     {
@@ -91,7 +120,13 @@ public class GameManager : MonoBehaviour
 
         int mobQuantity = mobSpawningInfo.GetNoOfMobToSpawn(pGameData.waveNo);
 
-        Vector3 playerPostion = player.GetComponent<Transform>().position;
+        if (mobSpawningInfo.CheckBossSpawn(pGameData.waveNo))
+        {
+            GameObject bossPrefab = mobSpawningInfo.GetBoss();
+            BossAI spawnedMob = Instantiate(bossPrefab, CalculatePosSpawn(), bossPrefab.transform.rotation).GetComponent<BossAI>();
+            spawnedMob.setup(pGameData.waveNo);
+            spawnedmobList.Add(spawnedMob);
+        }
 
         currentWaveMobQuantity = mobQuantity;
 
@@ -99,28 +134,7 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < mobQuantity; i++)
         {
-            Vector3 spawnPosition = new Vector3(0, 0, 0);
 
-            // x coord
-            spawnPosition.x = Random.Range((playerPostion.x + spawningRadius), spawnLocationBounds.x); // upper bound;
-            float tempXLowerBound = Random.Range((playerPostion.x - spawningRadius), -spawnLocationBounds.x); // lower bound;
-            spawnPosition.x = (spawnPosition.x <= spawnLocationBounds.x)
-                                    ? (tempXLowerBound >= -spawnLocationBounds.x)
-                                        ? (Random.Range(0.0f, 1.0f) >= 0.5f)
-                                            ? spawnPosition.x
-                                            : tempXLowerBound
-                                        : spawnLocationBounds.x
-                                    : tempXLowerBound;
-            // z coord
-            spawnPosition.z = Random.Range((playerPostion.z + spawningRadius), spawnLocationBounds.z); // upper bound;
-            float tempZLowerBound = Random.Range((playerPostion.z - spawningRadius), -spawnLocationBounds.z); // lower bound;
-            spawnPosition.z = (spawnPosition.z <= spawnLocationBounds.z)
-                                    ? (tempZLowerBound >= -spawnLocationBounds.z)
-                                        ? (Random.Range(0.0f, 1.0f) >= 0.5f)
-                                            ? spawnPosition.z
-                                            : tempZLowerBound
-                                        : spawnLocationBounds.z
-                                    : tempZLowerBound;
 
             GameObject mobPrefab = null;
             if (curWaveInfo == null)
@@ -150,7 +164,7 @@ public class GameManager : MonoBehaviour
                 }
             }
 
-            AIController spawnedMob = Instantiate(mobPrefab, spawnPosition, mobPrefab.transform.rotation).GetComponent<AIController>();
+            AIController spawnedMob = Instantiate(mobPrefab, CalculatePosSpawn(), mobPrefab.transform.rotation).GetComponent<AIController>();
             spawnedMob.setup(pGameData.waveNo);
             spawnedmobList.Add(spawnedMob);
         }
