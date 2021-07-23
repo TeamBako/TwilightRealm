@@ -7747,26 +7747,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 514473538174908135, guid: d1c0941c06f796c449f935733feccf03, type: 3}
-      propertyPath: baseMPRegen
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 514473538174908135, guid: d1c0941c06f796c449f935733feccf03, type: 3}
-      propertyPath: frostBreath
-      value: 
-      objectReference: {fileID: 798607520391666940, guid: ee4ada42571c6e2428ff6e31a28456d8, type: 3}
-    - target: {fileID: 514473538174908135, guid: d1c0941c06f796c449f935733feccf03, type: 3}
-      propertyPath: pData.fireBallData.castSpeed
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 514473538174908135, guid: d1c0941c06f796c449f935733feccf03, type: 3}
-      propertyPath: pData.rockDOTData.areaOfEffect
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 514473538174908135, guid: d1c0941c06f796c449f935733feccf03, type: 3}
-      propertyPath: pData.frostBreathData.areaOfCone
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 5539608860467879295, guid: d1c0941c06f796c449f935733feccf03, type: 3}
       propertyPath: m_RootOrder
       value: 1
