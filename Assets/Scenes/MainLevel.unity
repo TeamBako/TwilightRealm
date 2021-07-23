@@ -22073,7 +22073,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7d2c0c13d4e17646b9df4ebfe574197, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnLocationBounds: {x: 45, y: 0, z: 45}
+  spawnLocationBounds: {x: 44, y: 0, z: 44}
   mobSpawningInfo: {fileID: 11400000, guid: 4fa58ce0bd3712c4d8f231aaa46e4140, type: 2}
   gamePaused: 0
   waveStarted: 0
